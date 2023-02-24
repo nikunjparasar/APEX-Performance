@@ -1,0 +1,140 @@
+.apex__navbar {
+    display: flex;
+    justify-content:  space-between;
+    align-items: center;
+
+    padding: 2rem 6rem;
+}
+
+.apex__navbar-links {
+    flex: 1;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.apex__navbar-links_logo {
+    margin-right: 2rem;
+    display: flex;
+    justify-content: flex-start;
+}
+
+.apex__navbar-links_logo img {
+    width: 62.56px;
+    height: 16.02px;
+}
+
+.apex__navbar-links_container {
+    display: flex;
+    flex-direction: row;
+}
+
+.apex__navbar-sign { 
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+.apex__navbar-links_container p,
+.apex__navbar-sign p,
+.apex__navbar-menu_container p{
+    color: #FFF;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    text-transform: capitalize;
+
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+.apex__navbar-sign button, 
+.apex__navbar-menu_container button {
+    padding: 0.5rem 1rem;
+    color: #FFF;
+    background: #80cd32;
+    font-family: var(--font-family);
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 5px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+}
+
+.apex__navbar-menu {
+    margin-left: 1rem;
+
+    display: none;
+    position: relative;
+}
+
+.apex__navbar-menu svg {
+    cursor: pointer;
+}
+
+.apex__navbar-menu_container {
+    display: flex;
+    justify-content: flex-end;
+    align-items: flex-end;
+    flex-direction: column;
+
+    text-align: end;
+    background: var(--color-footer);
+    padding: 2rem;
+    position: absolute;
+    top: 40px;
+    right: 0;
+    margin-top: 1rem;
+    min-width: 210px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+}
+
+.apex__navbar-menu-container p {
+    margin: 1rem 0;
+}
+
+.apex__navbar-menu_container-links-sign {
+    display: none;
+}
+
+/* smaller compatibility */
+
+@media screen and (max-width: 1050px){
+    .apex__navbar-links_container{
+        display: none;
+    }
+    .apex__navbar-menu {
+        display: flex;
+    }
+}
+/* tablet compatibility */
+
+@media screen and (max-width: 700px){
+    .apex__navbar {
+        padding: 2rem 4rem;
+    }
+}
+
+/* mobile compatibility */
+
+@media screen and (max-width: 550px) {
+    .apex__navbar {
+        padding: 2rem;
+    }
+
+    .apex__navbar-sign {
+        display: none;
+    }
+
+    .apex__navbar-menu_container {
+        top: 20px;
+    }
+
+    .apex__navbar-menu_container-links-sign {
+        display: block;
+    }
+}
