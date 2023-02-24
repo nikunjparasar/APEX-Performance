@@ -20,8 +20,15 @@
 }
 
 .apex__navbar-links_logo img {
-    width: 62.56px;
-    height: 16.02px;
+    width: 200px;
+    height: 120px;
+}
+.apex__navbar-links_logo p {
+    font-family: var(--font-family1);
+    color: #8dff1b;
+    font-size: 35px;
+    margin: 0 1rem;
+
 }
 
 .apex__navbar-links_container {

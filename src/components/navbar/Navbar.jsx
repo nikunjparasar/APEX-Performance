@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './navbar.css';
 import {RiMenu3Line, RiCloseLine} from 'react-icons/ri';
-import logo from '../../assets/logo.svg';
+// import logo from '../../assets/logo.svg';
+import jesko from '../../assets/jesko.png';
 
 // menu funtional component
 const Menu = () => (
@@ -20,7 +21,9 @@ const Navbar = () => {
     <div className='apex__navbar'>
       
       <div className='apex__navbar-links_logo'>
-          <img src= {logo} alt="logo" />
+          <p><a href='#home'>APEX</a></p>
+          <a href = '#test'><img src= {jesko} alt="jesko" /></a>
+          
       </div>
 
       <div className = 'apex__navbar-links'>

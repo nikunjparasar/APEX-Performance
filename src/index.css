@@ -1,7 +1,19 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap');
 
+@font-face {
+  font-family: f1;
+  src: url(assets/fonts/Formula1-Regular.ttf);
+}
+
+@font-face {
+  font-family: logo;
+  src: url(assets/fonts/911laser.ttf);
+}
+
+
 :root {
-  --font-family: 'Manrope', sans-serif;
+  --font-family: f1;
+  --font-family1: logo;
 
   --gradient-text: linear-gradient(89.97deg, #AE67FA 1.84%, #F49867 102.67%);
   --gradient-bar: linear-gradient(103.22deg, #AE67FA -13.86%, #F49867 99.55%);
