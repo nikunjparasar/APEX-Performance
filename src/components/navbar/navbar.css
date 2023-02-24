@@ -144,4 +144,7 @@
     .apex__navbar-menu_container-links-sign {
         display: block;
     }
+    .apex__navbar-links_logo img {
+        display: none;
+    }
 }
