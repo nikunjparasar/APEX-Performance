@@ -7,11 +7,10 @@ import jesko from '../../assets/jesko.png';
 // menu funtional component
 const Menu = () => (
   <>
-  <p><a href='#home'>Home</a></p>
-  <p><a href='#whatAPEX'>What is Apex</a></p>
-  <p><a href='#possibility'>Test RS</a></p>
-  <p><a href='#features'>Case Studies</a></p>
-  <p><a href='#blog'>Library</a></p>
+  <p><a href='#whatAPEX'>ABOUT</a></p>
+  <p><a href='#possibility'>RS</a></p>
+  <p><a href='#features'>AI</a></p>
+  <p><a href='#blog'>REFERENCES</a></p>
   </>
 )
 
@@ -32,8 +31,7 @@ const Navbar = () => {
         </div>
 
         <div className='apex__navbar-sign'>
-          <p>Sign in</p>
-          <button type='button'>Sign Up</button>
+          <button type='button'>TEST</button>
         </div>
 
         <div className='apex__navbar-menu'>
@@ -47,8 +45,7 @@ const Navbar = () => {
               <div className='apex__navbar-menu_container-links'>
                 <Menu />
                 <div className='apex__navbar-menu_container-links-sign'>
-                  <p>Sign in</p>
-                  <button type='button'>Sign Up</button>
+                  <button type='button'>TEST</button>
                 </div>
               </div>
             </div>

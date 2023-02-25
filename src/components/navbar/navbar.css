@@ -20,15 +20,15 @@
 }
 
 .apex__navbar-links_logo img {
-    width: 200px;
-    height: 120px;
+    width: 123px;
+    height: 40px;
+    margin: 0 1 rem;
 }
 .apex__navbar-links_logo p {
     font-family: var(--font-family1);
     color: #8dff1b;
-    font-size: 35px;
+    font-size: 40px;
     margin: 0 1rem;
-
 }
 
 .apex__navbar-links_container {
@@ -47,7 +47,7 @@
 .apex__navbar-menu_container p{
     color: #FFF;
     font-family: var(--font-family);
-    font-weight: 500;
+    font-weight: 50;
     font-size: 18px;
     line-height: 25px;
     text-transform: capitalize;
@@ -59,10 +59,10 @@
 .apex__navbar-sign button, 
 .apex__navbar-menu_container button {
     padding: 0.5rem 1rem;
-    color: #FFF;
+    color: #000000;
     background: #80cd32;
     font-family: var(--font-family);
-    font-weight: 500;
+    font-weight: 50;
     font-size: 18px;
     line-height: 25px;
     border-radius: 5px;
@@ -124,6 +124,21 @@
     .apex__navbar {
         padding: 2rem 4rem;
     }
+    .apex__navbar-sign {
+        display: none;
+    }
+
+    .apex__navbar-menu_container {
+        top: 20px;
+    }
+
+    .apex__navbar-menu_container-links-sign {
+        display: block;
+    }
+    .apex__navbar-links_logo img {
+        display: none;
+    }
+    
 }
 
 /* mobile compatibility */
