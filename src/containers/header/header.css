@@ -76,31 +76,6 @@
     border-bottom-right-radius: 5px;
 }
 
-.apex__header-content__people {
-    width: 100%;
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-
-    margin-top: 2rem;
-}
-
-.apex__header-content__people img {
-    width: 181.79px;
-    height: 38px;
-}
-
-.apex__header-content__people p {
-    margin: 0 0 0 1rem;
-    font-family: var(--font-family);
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 38px;
-    color: #fff;
-    text-align: center;
-}
-
 .apex__header-image {
     flex: 1;
     display: flex;
@@ -118,7 +93,6 @@
 .tiltcard {
     width: 700px;
     height: 450px;
-    background: rgba(255,255,255,0.25);
     margin: 0 20;
     border-radius: 10px;
     background: linear-gradient(white, white) padding-box,
