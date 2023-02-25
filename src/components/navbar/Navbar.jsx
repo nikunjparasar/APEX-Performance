@@ -8,7 +8,7 @@ import jesko from '../../assets/jesko.png';
 const Menu = () => (
   <>
   <p><a href='#whatAPEX'>ABOUT</a></p>
-  <p><a href='#possibility'>RS</a></p>
+  <p><a href='#possibility'>TEAM</a></p>
   <p><a href='#features'>AI</a></p>
   <p><a href='#blog'>REFERENCES</a></p>
   </>
