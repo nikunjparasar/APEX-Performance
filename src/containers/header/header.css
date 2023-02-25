@@ -66,7 +66,7 @@
     font-size: 20px;
     line-height: 28px;
     background: #20f8ff34;
-    border: 2px solid #FF4820;
+    border: 2px solid #b5ff20;
     padding: 0 1rem;
     color: #fff;
     cursor: pointer;
@@ -96,7 +96,7 @@
     margin: 0 20;
     border-radius: 10px;
     background: linear-gradient(white, white) padding-box,
-    linear-gradient(to right, rgb(6, 236, 217), rgb(215, 11, 238)) border-box;
+    linear-gradient(to right, rgb(6, 236, 217), rgb(19, 238, 11)) border-box;
     border: 1px solid transparent;
 }
 
