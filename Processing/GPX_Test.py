@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
 
+
 # Parse the GPX file
 gpx_file = open("/Users/nikkparasar/Documents/Personal Projects/apexperformance/Processing/Silverstone_The_British_F1_GP_Circuit.gpx", "r")
 gpx = gpxpy.parse(gpx_file)
