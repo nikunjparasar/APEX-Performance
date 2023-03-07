@@ -41,7 +41,7 @@ fig = plt.figure()
 ax = fig.add_subplot(111, projection="3d")
 
 # Plot the racetrack surface
-surf = ax.plot_trisurf(x, y, z, cmap=cmap, linewidth=0)
+surf = ax.plot_trisurf(x, y, z, cmap=cmap, linewidth=3)
 
 # Set the limits of the axes
 xmin, xmax = min(x), max(x)

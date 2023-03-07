@@ -18,7 +18,7 @@ x_tr_left_m = x_m - w_tr_left_m * np.sin(theta)
 y_tr_left_m = y_m + w_tr_left_m * np.cos(theta)
 
 # Plot center line and track boundaries
-plt.plot(x_m, y_m, 'k--', label='Center line')
+# plt.plot(x_m, y_m, 'k--', label='Center line')
 plt.plot(x_tr_right_m, y_tr_right_m, 'gray', label='Right track boundary')
 plt.plot(x_tr_left_m, y_tr_left_m, 'gray', label='Left track boundary')
 
