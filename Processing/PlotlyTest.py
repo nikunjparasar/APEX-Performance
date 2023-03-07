@@ -85,8 +85,8 @@ app.layout = html.Div([
 
 def update_track_plot(track_name):
      # Load track data from CSV
-    track_data_1 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/Processing/silverstone.csv', delimiter=',')
-    track_data_2 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/Processing/monza.csv', delimiter=',')
+    track_data_1 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/TrackModels/Silverstone.csv', delimiter=',')
+    track_data_2 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/TrackModels/Monza.csv', delimiter=',')
 
     if track_name == 'track_1':
         track_data = track_data_1
