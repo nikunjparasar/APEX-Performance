@@ -88,6 +88,9 @@ def update_track_plot(track_name):
 
     # Set figure layout and display plot
     fig.update_layout(template='plotly_dark', title='Track', xaxis=dict(visible=False), yaxis=dict(visible=False))
+    # fig.update_layout(aspectmode='track_data')
+    fig.update_layout(xaxis_range=[-300, 1500], yaxis_range=[-300, 1500])
+
     return fig
 
 if __name__ == '__main__':

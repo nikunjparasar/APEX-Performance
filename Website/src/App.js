@@ -11,7 +11,6 @@ const App = () => {
           <Header />
         </div>
         <Brand />
-        <WhatAPEX />
         <Features />
         <Possibility />
         <CTA />

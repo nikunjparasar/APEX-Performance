@@ -9,7 +9,7 @@ const Footer = () => (
         {/* <h1 className="gradient__text">Do you want to step in to the future before others</h1> */}
       </div>
       <div className="apex__footer-btn">
-        <p>View Github</p>
+        <p>Future: View Github</p>
       </div>
 
       <></>

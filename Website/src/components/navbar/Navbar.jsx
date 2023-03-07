@@ -7,10 +7,10 @@ import jesko from '../../assets/jesko.png';
 // menu funtional component
 const Menu = () => (
   <>
-  <p><a href='#whatAPEX'>ABOUT</a></p>
+  <p><a href='#whatAPEX'>HOME</a></p>
   <p><a href='#features'>FEATURES</a></p>
   <p><a href='#possibility'>AI</a></p>
-  <p><a href='#cta'>RESEARCH</a></p>
+  <p><a href='#footer'>FUTURE</a></p>
   </>
 )
 

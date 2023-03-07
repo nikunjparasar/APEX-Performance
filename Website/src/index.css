@@ -21,12 +21,12 @@
   --font-family1: logo;
   --font-family2: startf;
   
-  --gradient-text: linear-gradient(89.97deg, #00c2c6 1.84%, #8afe2c 102.67%);
-  --gradient-bar: linear-gradient(103.22deg, #67faf0 -13.86%, #88f467 99.55%);
+  --gradient-text: linear-gradient(89.97deg, #46ff21 1.84%, #eafe33 102.67%);
+  --gradient-bar: linear-gradient(103.22deg, #67faf0 -13.86%, hsl(114, 100%, 72%) 99.55%);
   
   --color-bg: #161616;
-  --color-footer : #373737;
+  --color-footer : #282727;
   --color-blog: #393939;
   --color-text: #949494;
-  --color-subtext: #83ff1e;
+  --color-subtext: #ffffff;
 }

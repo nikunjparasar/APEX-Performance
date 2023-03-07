@@ -4,8 +4,8 @@ import './features.css';
 
 const featuresData = [
   {
-    title: '3D Spline Track Models',
-    text: 'Full support of 3D modeling tracks ensures that you get the upper edge of accuracy in your calculations.',
+    title: 'Detailed Spline Track Models',
+    text: 'Full support of spline interpolated (3D coming soon) modeling tracks ensures that you get the upper edge of accuracy in your calculations.',
   },
   {
     title: 'Optimized Racing Line Calculations',
@@ -24,7 +24,7 @@ const featuresData = [
 const Features = () => (
   <div className="apex__features section__padding" id="features">
     <div className="apex__features-heading">
-      <h1 className="gradient__text">Engineering has brought us near the edge of physical potential and adrenaline. Now AI can take us farther. </h1>
+      <h1 className="gradient__text">Engineering has brought us near the edge of physical potential and adrenaline. Now APEX can take us farther. </h1>
       <p>Performance Perfected.</p>
     </div>
     <div className="apex__features-container">
