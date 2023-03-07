@@ -1,20 +1,21 @@
-import plotly.graph_objects as go
-import pandas as pd
 import numpy as np
 from scipy.interpolate import splprep, splev
 import dash
+import plotly.graph_objects as go
 from dash import dcc
 from dash import html
+from scipy.interpolate import interp1d
 
-   
+
+  
 
 # Set up Dash app
 app = dash.Dash(__name__)
 
 # Define dropdown options
 dropdown_options = [
-    {'label': 'Track 1', 'value': 'track_1'},
-    {'label': 'Track 2', 'value': 'track_2'}
+    {'label': 'Silverstone', 'value': 'track_1'},
+    {'label': 'Monza', 'value': 'track_2'}
 ]
 
 # Define app layout
@@ -73,15 +74,15 @@ def update_track_plot(track_name):
     y_tr_left = y_m + dy_left
 
     tck, u = splprep([x_tr_left, y_tr_left], s=0)
-    new_points = splev(np.linspace(0, 1, num=1000), tck)
+    new_points = splev(np.linspace(0, 1, num=2000), tck)
     x_tr_left_smooth, y_tr_left_smooth = new_points
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
 
     # Add track limits as lines with solid white color
-    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=2), mode='lines', name='Track Limit'))
-    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=2), mode='lines', name='Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1.5), mode='lines', name='Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Track Limit'))
 
     # Add center line as a line plot
     # fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='white', width=3), mode='lines', name='Center Line'))
@@ -89,8 +90,6 @@ def update_track_plot(track_name):
     # Set figure layout and display plot
     fig.update_layout(template='plotly_dark', title='Track', xaxis=dict(visible=False), yaxis=dict(visible=False))
     # fig.update_layout(aspectmode='track_data')
-    fig.update_layout(xaxis_range=[-300, 1500], yaxis_range=[-300, 1500])
-
     return fig
 
 if __name__ == '__main__':
