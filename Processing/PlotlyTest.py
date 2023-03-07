@@ -126,31 +126,31 @@ def update_track_plot(track_name):
     x_tr_left_smooth, y_tr_left_smooth = new_points
 
 
-    # optimal line
-    x_opt, y_opt = simulate_vehicle(objective, x_m, y_m, w_tr_right_m, w_tr_left_m, 200)
+    # # optimal line
+    # x_opt, y_opt = simulate_vehicle(objective, x_m, y_m, w_tr_right_m, w_tr_left_m, 200)
 
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
 
     # Add track limits as lines with solid white color
-    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Track Limit'))
-    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='Teal', width=1), mode='lines', name='Right Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='Purple', width=1.5), mode='lines', name='Left Track Limit'))
     
     # Add the optimal line
-    fig.add_trace(go.Scatter(x=x_opt, y=y_opt, mode='lines', line=dict(color='red', width=1)))
+    # fig.add_trace(go.Scatter(x=x_opt, y=y_opt, mode='lines', line=dict(color='red', width=1)))
     
     # Add center line as a line plot
-    # fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='white', width=3), mode='lines', name='Center Line'))
+    fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='white', width=3), mode='lines', name='Center Line'))
     
     
     # Set figure layout and display plot
     fig.update_layout(template='plotly_dark', title='Track', xaxis=dict(visible=False), yaxis=dict(visible=False))
     # fig.update_layout(aspectmode='track_data')
     
- 
-    fig.update_xaxes(scaleanchor="y", scaleratio=1)
     fig.update_yaxes(scaleanchor="x", scaleratio=1)
+    fig.update_xaxes(scaleanchor="y", scaleratio=1)
+    
     return fig
 
 if __name__ == '__main__':
