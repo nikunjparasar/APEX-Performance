@@ -39,6 +39,11 @@ dropdown_options = [
     {'label': 'Zandvoort', 'value': 'track_25'},
 ]
 
+
+app.css.append_css({
+    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
+})
+
 # Define app layout
 app.layout = html.Div([
     dcc.Dropdown(

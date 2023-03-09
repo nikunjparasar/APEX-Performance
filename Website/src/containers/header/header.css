@@ -96,7 +96,7 @@
     margin: 0 20;
     border-radius: 10px;
     background: linear-gradient(white, white) padding-box,
-    linear-gradient(to right, rgb(6, 236, 217), rgb(220, 48, 230)) border-box;
+    linear-gradient(to right, rgb(6, 236, 217), rgb(175, 230, 48)) border-box;
     border: 1px solid transparent;
 }
 
