@@ -11,7 +11,7 @@ import os
 app = dash.Dash(__name__)
 
 # Define dropdown options
-dropdown_options = [    
+dropdown_options = [
     {'label': 'Austin', 'value': 'track_01'},
     {'label': 'BrandsHatch', 'value': 'track_02'},
     {'label': 'Budapest', 'value': 'track_03'},
@@ -37,7 +37,6 @@ dropdown_options = [
     {'label': 'Suzuka', 'value': 'track_23'},
     {'label': 'Yas Marina', 'value': 'track_24'},
     {'label': 'Zandvoort', 'value': 'track_25'},
-
 ]
 
 # Define app layout
@@ -65,59 +64,62 @@ def update_track_plot(track_name):
     
      # #################### LOADING CSV DATA FROM FILES ##########################
     
-    file_path = os.path.join('apexperformance/TrackModels', 'Austin.csv')
+    cwd = os.getcwd()
+    
+    
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Austin.csv')
     austin_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'BrandsHatch.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'BrandsHatch.csv')
     bh_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Budapest.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Budapest.csv')
     budapest_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Catalunya.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Catalunya.csv')
     cat_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Hockenheim.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Hockenheim.csv')
     hock_data = np.genfromtxt(file_path, delimiter=',')
     
-    file_path = os.path.join('apexperformance/TrackModels', 'IMS.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'IMS.csv')
     ims_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Melbourne.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Melbourne.csv')
     mel_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'MexicoCity.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'MexicoCity.csv')
     mc_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Montreal.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Montreal.csv')
     montreal_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Monza.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Monza.csv')
     monza_data = np.genfromtxt(file_path, delimiter=',')
     
-    file_path = os.path.join('apexperformance/TrackModels', 'MoscowRaceway.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'MoscowRaceway.csv')
     moscow_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Norisring.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Norisring.csv')
     noris_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Nuerburgring.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Nuerburgring.csv')
     burg_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Oschersleben.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Oschersleben.csv')
     osch_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Sakhir.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Sakhir.csv')
     sakhir_data = np.genfromtxt(file_path, delimiter=',')
     
-    file_path = os.path.join('apexperformance/TrackModels', 'SaoPaulo.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'SaoPaulo.csv')
     sp_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Sepang.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Sepang.csv')
     sepang_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Shanghai.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Shanghai.csv')
     shanghai_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Silverstone.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Silverstone.csv')
     silv_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Sochi.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Sochi.csv')
     sochi_data = np.genfromtxt(file_path, delimiter=',')
     
-    file_path = os.path.join('apexperformance/TrackModels', 'Spa.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Spa.csv')
     spa_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Spielberg.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Spielberg.csv')
     spiel_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Suzuka.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Suzuka.csv')
     suzuka_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'YasMarina.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'YasMarina.csv')
     yasm_data = np.genfromtxt(file_path, delimiter=',')
-    file_path = os.path.join('apexperformance/TrackModels', 'Zandvoort.csv')
+    file_path = os.path.join(cwd, 'Processing/TrackModels', 'Zandvoort.csv')
     zandvoort_data = np.genfromtxt(file_path, delimiter=',')
     
     
@@ -178,9 +180,10 @@ def update_track_plot(track_name):
         
         
     ############ END LOADING CSV DATA ###########################################
-
-
-
+    
+    
+    
+    
     # Extract data columns
     x_m = track_data[:, 0]
     y_m = track_data[:, 1]
