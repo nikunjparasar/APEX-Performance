@@ -5,65 +5,39 @@ import plotly.graph_objects as go
 from dash import dcc
 from dash import html
 from scipy.interpolate import interp1d
-
-
-  #######################VEHICLE DYNAMICS SIMULATION##############################
-
-def simulate_vehicle(track, initial_state, dt, N):
-    """
-    Simulates a vehicle along a given track.
-    """
-    x, y, psi, v = initial_state
-    states = np.zeros((N, 4))
-    states[0] = initial_state
-    
-    for i in range(1, N):
-        # Calculate curvature of the track at the current position
-        curvature = track.curvature(x, y)
-        
-        # Calculate lateral and longitudinal acceleration of the vehicle
-        a_lat = v**2 * curvature
-        a_long = 0
-        
-        # Calculate new state of the vehicle
-        x += v * np.cos(psi) * dt
-        y += v * np.sin(psi) * dt
-        psi += v / track.L * np.tan(track.alpha(x, y, psi)) * dt
-        v += (a_long - track.mu * track.g * np.cos(track.alpha(x, y, psi)) - a_lat * np.sin(track.alpha(x, y, psi))) * dt
-        
-        states[i] = np.array([x, y, psi, v])
-        
-    return states
-
-
-def objective(params, track, initial_state, dt, N):
-    """
-    Calculates the objective function for a given set of parameters.
-    """
-    track.update_params(params)
-    states = simulate_vehicle(track, initial_state, dt, N)
-    
-    # Calculate the total time to complete the track
-    total_time = states[-1, 0] / states[-1, 3]
-    
-    # Calculate a penalty for deviating from the optimal racing line
-    penalty = 0
-    for i in range(N):
-        penalty += track.dist_to_optimal(states[i, 0], states[i, 1])**2
-    
-    return total_time + track.lambda_ * penalty
-
-
-
-#####################DASH APPLICATION##################
+import os
 
 # Set up Dash app
 app = dash.Dash(__name__)
 
 # Define dropdown options
-dropdown_options = [
-    {'label': 'Silverstone', 'value': 'track_1'},
-    {'label': 'Monza', 'value': 'track_2'}
+dropdown_options = [    
+    {'label': 'Austin', 'value': 'track_01'},
+    {'label': 'BrandsHatch', 'value': 'track_02'},
+    {'label': 'Budapest', 'value': 'track_03'},
+    {'label': 'Catalunya', 'value': 'track_04'},
+    {'label': 'Hockenheim', 'value': 'track_05'},
+    {'label': 'IMS', 'value': 'track_06'},
+    {'label': 'Melbourne', 'value': 'track_07'},
+    {'label': 'Mexico City', 'value': 'track_08'},
+    {'label': 'Montreal', 'value': 'track_09'},
+    {'label': 'Monza', 'value': 'track_10'},
+    {'label': 'Moscow Raceway', 'value': 'track_11'},
+    {'label': 'Norisring', 'value': 'track_12'},
+    {'label': 'Neurburgring', 'value': 'track_13'},
+    {'label': 'Oschersleben', 'value': 'track_14'},
+    {'label': 'Sakhir', 'value': 'track_15'},
+    {'label': 'Sao Paulo', 'value': 'track_16'},
+    {'label': 'Sepang', 'value': 'track_17'},
+    {'label': 'Shanghai', 'value': 'track_18'},
+    {'label': 'Silverstone', 'value': 'track_19'},
+    {'label': 'Sochi', 'value': 'track_20'},
+    {'label': 'Spa', 'value': 'track_21'},
+    {'label': 'Spielberg', 'value': 'track_22'},
+    {'label': 'Suzuka', 'value': 'track_23'},
+    {'label': 'Yas Marina', 'value': 'track_24'},
+    {'label': 'Zandvoort', 'value': 'track_25'},
+
 ]
 
 # Define app layout
@@ -71,9 +45,13 @@ app.layout = html.Div([
     dcc.Dropdown(
         id='track-dropdown',
         options=dropdown_options,
-        value='track_1'
+        value='track_01',
+        style = {'width': '1000px', 'font-family': 'Arial'}
     ),
-    dcc.Graph(id='track-plot')
+    dcc.Graph(
+        id='track-plot', 
+        style={'height': '1000px', 'width': '1000px'}
+    )
 ])
 
 # Define callback to update track plot based on dropdown selection
@@ -84,14 +62,123 @@ app.layout = html.Div([
 
 
 def update_track_plot(track_name):
-     # Load track data from CSV
-    track_data_1 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/TrackModels/Silverstone.csv', delimiter=',')
-    track_data_2 = np.genfromtxt('/Users/nikkparasar/Documents/Personal Projects/apexperformance/TrackModels/Monza.csv', delimiter=',')
+    
+     # #################### LOADING CSV DATA FROM FILES ##########################
+    
+    file_path = os.path.join('apexperformance/TrackModels', 'Austin.csv')
+    austin_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'BrandsHatch.csv')
+    bh_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Budapest.csv')
+    budapest_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Catalunya.csv')
+    cat_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Hockenheim.csv')
+    hock_data = np.genfromtxt(file_path, delimiter=',')
+    
+    file_path = os.path.join('apexperformance/TrackModels', 'IMS.csv')
+    ims_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Melbourne.csv')
+    mel_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'MexicoCity.csv')
+    mc_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Montreal.csv')
+    montreal_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Monza.csv')
+    monza_data = np.genfromtxt(file_path, delimiter=',')
+    
+    file_path = os.path.join('apexperformance/TrackModels', 'MoscowRaceway.csv')
+    moscow_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Norisring.csv')
+    noris_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Nuerburgring.csv')
+    burg_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Oschersleben.csv')
+    osch_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Sakhir.csv')
+    sakhir_data = np.genfromtxt(file_path, delimiter=',')
+    
+    file_path = os.path.join('apexperformance/TrackModels', 'SaoPaulo.csv')
+    sp_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Sepang.csv')
+    sepang_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Shanghai.csv')
+    shanghai_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Silverstone.csv')
+    silv_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Sochi.csv')
+    sochi_data = np.genfromtxt(file_path, delimiter=',')
+    
+    file_path = os.path.join('apexperformance/TrackModels', 'Spa.csv')
+    spa_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Spielberg.csv')
+    spiel_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Suzuka.csv')
+    suzuka_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'YasMarina.csv')
+    yasm_data = np.genfromtxt(file_path, delimiter=',')
+    file_path = os.path.join('apexperformance/TrackModels', 'Zandvoort.csv')
+    zandvoort_data = np.genfromtxt(file_path, delimiter=',')
+    
+    
+    if track_name == 'track_01':
+        track_data = austin_data
+    elif track_name == 'track_02':
+        track_data = bh_data
+    elif track_name == 'track_03':
+        track_data = budapest_data
+    elif track_name == 'track_04':
+        track_data = cat_data
+    elif track_name == 'track_05':
+        track_data = hock_data
+        
+    elif track_name == 'track_06':
+        track_data = ims_data
+    elif track_name == 'track_07':
+        track_data = mel_data    
+    elif track_name == 'track_08':
+        track_data = mc_data
+    elif track_name == 'track_09':
+        track_data = montreal_data
+    elif track_name == 'track_10':
+        track_data = monza_data
+        
+    elif track_name == 'track_11':
+        track_data = moscow_data
+    elif track_name == 'track_12':
+        track_data = noris_data
+    elif track_name == 'track_13':
+        track_data = burg_data    
+    elif track_name == 'track_14':
+        track_data = osch_data
+    elif track_name == 'track_15':
+        track_data = sakhir_data
+        
+    elif track_name == 'track_16':
+        track_data = sp_data
+    elif track_name == 'track_17':
+        track_data = sepang_data
+    elif track_name == 'track_18':
+        track_data = shanghai_data
+    elif track_name == 'track_19':
+        track_data = silv_data    
+    elif track_name == 'track_20':
+        track_data = sochi_data
+        
+    elif track_name == 'track_21':
+        track_data = spa_data
+    elif track_name == 'track_22':
+        track_data = spiel_data
+    elif track_name == 'track_23':
+        track_data = suzuka_data
+    elif track_name == 'track_24':
+        track_data = yasm_data   
+    elif track_name == 'track_25':
+        track_data = zandvoort_data   
+        
+        
+    ############ END LOADING CSV DATA ###########################################
 
-    if track_name == 'track_1':
-        track_data = track_data_1
-    elif track_name == 'track_2':
-        track_data = track_data_2
 
 
     # Extract data columns
@@ -126,26 +213,24 @@ def update_track_plot(track_name):
     x_tr_left_smooth, y_tr_left_smooth = new_points
 
 
-    # # optimal line
-    # x_opt, y_opt = simulate_vehicle(objective, x_m, y_m, w_tr_right_m, w_tr_left_m, 200)
 
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
 
     # Add track limits as lines with solid white color
-    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='Teal', width=1), mode='lines', name='Right Track Limit'))
-    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='Purple', width=1.5), mode='lines', name='Left Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Right Track Limit'))
+    fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Left Track Limit'))
     
     # Add the optimal line
     # fig.add_trace(go.Scatter(x=x_opt, y=y_opt, mode='lines', line=dict(color='red', width=1)))
     
     # Add center line as a line plot
-    fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='white', width=3), mode='lines', name='Center Line'))
+    fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='teal', width=0.5), mode='lines', name='Center Line'))
     
     
     # Set figure layout and display plot
-    fig.update_layout(template='plotly_dark', title='Track', xaxis=dict(visible=False), yaxis=dict(visible=False))
+    fig.update_layout(template='plotly_dark', title='Circuit Analysis', xaxis=dict(visible=False), yaxis=dict(visible=False))
     # fig.update_layout(aspectmode='track_data')
     
     fig.update_yaxes(scaleanchor="x", scaleratio=1)
