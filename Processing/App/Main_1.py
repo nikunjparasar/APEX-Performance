@@ -40,9 +40,6 @@ dropdown_options = [
 ]
 
 
-app.css.append_css({
-    'external_url': 'https://codepen.io/chriddyp/pen/bWLwgP.css'
-})
 
 # Define app layout
 app.layout = html.Div([
