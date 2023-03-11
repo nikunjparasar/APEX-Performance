@@ -1,5 +1,8 @@
 import React from 'react';
+import DashGraph from './DashGraph';
+
 import './cta.css';
+
 
 const CTA = () => (
   <div className="apex__cta">
@@ -10,6 +13,8 @@ const CTA = () => (
     <div className="apex__cta-btn">
       <button type="button">Get Started</button>
     </div>
+    <DashGraph />
+
   </div>
 );
 

@@ -53,6 +53,7 @@ app.layout = html.Div([
         id='track-plot', 
         style={'height': '1000px', 'width': '1000px'}
     )
+    
 ])
 
 # Define callback to update track plot based on dropdown selection
@@ -244,7 +245,7 @@ def update_track_plot(track_name):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True)
+    app.run_server(debug=True, port=8051)
     
     
     
