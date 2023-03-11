@@ -32,38 +32,13 @@
     font-weight: 800;
 }
 
-.apex__cta-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
 
-    margin-left: 2rem;
-}
-
-.apex__cta-btn button {
-    background: #000;
-    color: #fff;
-    font-family: var(--font-family);
-    font-weight: 700;
-    font-size: 18px;
-    line-height: 30px;
-    padding: 0.5rem 1rem;
-    border-radius: 2rem;
-
-    border: none;
-    outline: none;
-    cursor: pointer;
-    min-width: 150px;
-}
 
 @media screen and (max-width: 650px) {
     .apex__cta {
         flex-direction: column;
     }
 
-    .apex__cta-btn {
-        margin: 2rem 0 0;
-    }
 }
 
 @media screen and (max-width: 550px) {
@@ -75,10 +50,5 @@
     .apex__cta-content h3 {
         font-size: 18px;
         line-height: 32px;
-    }
-
-    .apex__cta-btn button {
-        font-size: 14px;
-        line-height: 28px;
     }
 }
