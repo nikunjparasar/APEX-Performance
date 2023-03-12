@@ -308,7 +308,7 @@ def update_track_plot(track_name):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8052)
+    app.run_server(debug=True, port=8050)
     
     
     
