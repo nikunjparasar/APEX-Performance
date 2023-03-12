@@ -5,8 +5,8 @@ const DashGraph = () => {
     <iframe
       title="Dash Graph"
       src="http://localhost:8050" // or your deployed Dash app URL
-      width="705px"
-      height="705px"
+      width="750px"
+      height="770px"
       frameBorder="0"
     />
   );

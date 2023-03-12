@@ -6,6 +6,7 @@ from dash import dcc
 from dash import html
 from scipy.interpolate import interp1d
 import os
+from scipy.optimize import minimize_scalar
 
 # Set up Dash app
 app = dash.Dash(__name__)
@@ -187,7 +188,7 @@ def update_track_plot(track_name):
     ############ END LOADING CSV DATA ###########################################
     
     
-    
+    ############## START CUBIC SPLINE INTERPOLATION ##############################
     
     # Extract data columns
     x_m = track_data[:, 0]
@@ -220,19 +221,79 @@ def update_track_plot(track_name):
     new_points = splev(np.linspace(0, 1, num=2000), tck)
     x_tr_left_smooth, y_tr_left_smooth = new_points
 
+    ############## END CUBIC SPLINE INTERPOLATION ##############################
+
+
+    ################ START RACING LINE CALCULATIONS ###########################
+    # tck, _ = splprep([x_m_smooth, y_m_smooth], s=0)
+    # # Calculate the radius of curvature for each point on the centerline
+    # dx_dt = splev(np.linspace(0, 1, num=1000), tck, der=1)[0]
+    # d2x_dt2 = splev(np.linspace(0, 1, num=1000), tck, der=2)[0]
+    # dy_dt = splev(np.linspace(0, 1, num=1000), tck, der=1)[1]
+    # d2y_dt2 = splev(np.linspace(0, 1, num=1000), tck, der=2)[1]
+    # radius = ((dx_dt * d2y_dt2 - dy_dt * d2x_dt2) / 
+    #         ((dx_dt ** 2 + dy_dt ** 2) ** 1.5))
+    # radius = np.abs(radius)
+
+    # # Calculate the ideal speed for each point on the racing line
+    # friction = 1.0  # Coefficient of friction
+    # acceleration = 9.81  # Maximum lateral acceleration of the vehicle
+    # speeds = np.sqrt(friction * radius * acceleration)
+
+    
+
+    # def optimal_racing_line(centerline_xs, centerline_ys, speeds):
+    #     dx_dt = np.gradient(centerline_xs)
+    #     dy_dt = np.gradient(centerline_ys)
+    #     ds_dt = np.sqrt(dx_dt ** 2 + dy_dt ** 2)
+
+    #     d2x_dt2 = np.gradient(dx_dt) / ds_dt
+    #     d2y_dt2 = np.gradient(dy_dt) / ds_dt
+
+    #     def objective(s):
+    #         x = np.interp(s, np.cumsum(ds_dt), centerline_xs)
+    #         y = np.interp(s, np.cumsum(ds_dt), centerline_ys)
+    #         dx_dt = np.interp(s, np.cumsum(ds_dt), dx_dt)
+    #         dy_dt = np.interp(s, np.cumsum(ds_dt), dy_dt)
+    #         d2x_dt2 = np.interp(s, np.cumsum(ds_dt), d2x_dt2)
+    #         d2y_dt2 = np.interp(s, np.cumsum(ds_dt), d2y_dt2)
+    #         radius = ((dx_dt * d2y_dt2 - dy_dt * d2x_dt2) /
+    #                 ((dx_dt ** 2 + dy_dt ** 2) ** 1.5))
+    #         radius = np.abs(radius)
+    #         speed = np.interp(s, np.cumsum(ds_dt), speeds)
+    #         return radius / speed
+
+    #     s0 = np.argmax(speeds)
+    #     result = minimize_scalar(objective, bounds=(0, np.sum(ds_dt)), method='bounded')
+    #     s = result.x
+    #     x = np.interp(s, np.cumsum(ds_dt), centerline_xs)
+    #     y = np.interp(s, np.cumsum(ds_dt), centerline_ys)
+    #     return x, y
+
+
+
+
+
+
+
+
+
+
 
 
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
 
+
+
     # Add track limits as lines with solid white color
     fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Right Track Limit'))
     fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Left Track Limit'))
     
-    # Add the optimal line
-    # fig.add_trace(go.Scatter(x=x_opt, y=y_opt, mode='lines', line=dict(color='red', width=1)))
-    
+   # Plot the racing line
+    # racing_xs, racing_ys = optimal_racing_line(x_m_smooth, y_m_smooth, speeds)
+    # fig.add_trace(go.Scatter(x=racing_xs, y=racing_ys, mode='lines', name='Racing line'))
     # Add center line as a line plot
     fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='teal', width=0.5), mode='lines', name='Center Line'))
     
@@ -247,7 +308,7 @@ def update_track_plot(track_name):
     return fig
 
 if __name__ == '__main__':
-    app.run_server(debug=True, port=8050)
+    app.run_server(debug=True, port=8052)
     
     
     
