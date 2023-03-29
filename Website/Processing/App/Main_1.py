@@ -6,7 +6,7 @@ from dash import dcc
 from dash import html
 from scipy.interpolate import interp1d
 import os
-from scipy.optimize import minimize_scalar
+from scipy.optimize import minimize
 
 # Set up Dash app
 app = dash.Dash(__name__)
@@ -224,63 +224,62 @@ def update_track_plot(track_name):
     ############## END CUBIC SPLINE INTERPOLATION ##############################
 
 
-    ################ START RACING LINE CALCULATIONS ###########################
-    # tck, _ = splprep([x_m_smooth, y_m_smooth], s=0)
-    # # Calculate the radius of curvature for each point on the centerline
-    # dx_dt = splev(np.linspace(0, 1, num=1000), tck, der=1)[0]
-    # d2x_dt2 = splev(np.linspace(0, 1, num=1000), tck, der=2)[0]
-    # dy_dt = splev(np.linspace(0, 1, num=1000), tck, der=1)[1]
-    # d2y_dt2 = splev(np.linspace(0, 1, num=1000), tck, der=2)[1]
-    # radius = ((dx_dt * d2y_dt2 - dy_dt * d2x_dt2) / 
-    #         ((dx_dt ** 2 + dy_dt ** 2) ** 1.5))
-    # radius = np.abs(radius)
-
-    # # Calculate the ideal speed for each point on the racing line
-    # friction = 1.0  # Coefficient of friction
-    # acceleration = 9.81  # Maximum lateral acceleration of the vehicle
-    # speeds = np.sqrt(friction * radius * acceleration)
-
-    
-
-    # def optimal_racing_line(centerline_xs, centerline_ys, speeds):
-    #     dx_dt = np.gradient(centerline_xs)
-    #     dy_dt = np.gradient(centerline_ys)
-    #     ds_dt = np.sqrt(dx_dt ** 2 + dy_dt ** 2)
-
-    #     d2x_dt2 = np.gradient(dx_dt) / ds_dt
-    #     d2y_dt2 = np.gradient(dy_dt) / ds_dt
-
-    #     def objective(s):
-    #         x = np.interp(s, np.cumsum(ds_dt), centerline_xs)
-    #         y = np.interp(s, np.cumsum(ds_dt), centerline_ys)
-    #         dx_dt = np.interp(s, np.cumsum(ds_dt), dx_dt)
-    #         dy_dt = np.interp(s, np.cumsum(ds_dt), dy_dt)
-    #         d2x_dt2 = np.interp(s, np.cumsum(ds_dt), d2x_dt2)
-    #         d2y_dt2 = np.interp(s, np.cumsum(ds_dt), d2y_dt2)
-    #         radius = ((dx_dt * d2y_dt2 - dy_dt * d2x_dt2) /
-    #                 ((dx_dt ** 2 + dy_dt ** 2) ** 1.5))
-    #         radius = np.abs(radius)
-    #         speed = np.interp(s, np.cumsum(ds_dt), speeds)
-    #         return radius / speed
-
-    #     s0 = np.argmax(speeds)
-    #     result = minimize_scalar(objective, bounds=(0, np.sum(ds_dt)), method='bounded')
-    #     s = result.x
-    #     x = np.interp(s, np.cumsum(ds_dt), centerline_xs)
-    #     y = np.interp(s, np.cumsum(ds_dt), centerline_ys)
-    #     return x, y
+    ################ CALCULATE OPTIMAL RACING LINE ############################
 
 
+    # Define cost function
+    # def lap_time(x, y, v, theta):
+    #     # Calculate lap time
+    #     lap_time = 0
+    #     for i in range(len(x)-1):
+    #         # Calculate distance between two points
+    #         dx = x[i+1] - x[i]
+    #         dy = y[i+1] - y[i]
+    #         ds = np.sqrt(dx**2 + dy**2)
+    #         # Calculate speed and time taken to travel the distance
+    #         speed = v[i] * np.cos(theta[i]) # Assume car travels at maximum speed along the racing line
+    #         time = ds / speed
+    #         lap_time += time
+    #     return lap_time
 
+    # Define optimization function
+    # def optimize_racing_line(x_m, y_m, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth):
+    #     # Define initial guess for racing line
+    #     x_r, y_r = x_m, y_m
+        
+    #     # Define maximum velocity and lateral acceleration of the car
+    #     v_max = 60 # m/s
+    #     a_lat_max = 4 # m/s^2
+        
+    #     # Iterate gradient descent to find optimal racing line
+    #     for i in range(100):
+    #         # Calculate velocity and angle of each point on the racing line
+    #         dx = np.gradient(x_r)
+    #         dy = np.gradient(y_r)
+    #         ds = np.sqrt(dx**2 + dy**2)
+    #         v = v_max * np.ones_like(ds) # Assume car travels at maximum speed along the racing line
+    #         theta = np.arctan2(dy, dx)
+            
+    #         # Calculate lateral acceleration of the car
+    #         curvature = np.gradient(np.arctan2(dy, dx), ds)
+    #         a_lat = v**2 * curvature
+            
+    #         # Calculate cost function
+    #         lap_time_current = lap_time(x_r, y_r, v, theta)
+            
+    #         # Update racing line
+    #         x_r_new = minimize(lambda x: lap_time(x, y_r, v, theta), x_r, method='BFGS').x
+    #         y_r_new = minimize(lambda y: lap_time(x_r_new, y, v, theta), y_r, method='BFGS').x
+            
+    #         # Check if new lap time is better than current lap time
+    #         lap_time_new = lap_time(x_r_new, y_r_new, v, theta)
+    #         if lap_time_new < lap_time_current:
+    #             x_r, y_r = x_r_new, y_r_new
+            
+    #     return x_r, y_r
 
-
-
-
-
-
-
-
-
+    # Calculate optimal racing line
+    # x_r, y_r = optimize_racing_line(x_m_smooth, y_m_smooth, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth)
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
@@ -291,12 +290,14 @@ def update_track_plot(track_name):
     fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Right Track Limit'))
     fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Left Track Limit'))
     
-   # Plot the racing line
-    # racing_xs, racing_ys = optimal_racing_line(x_m_smooth, y_m_smooth, speeds)
-    # fig.add_trace(go.Scatter(x=racing_xs, y=racing_ys, mode='lines', name='Racing line'))
+  
     # Add center line as a line plot
     fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='teal', width=0.5), mode='lines', name='Center Line'))
     
+    
+     # Plot racing line and track
+    # fig.add_trace(go.Scatter(x=x_r, y=y_r, mode='lines', line=dict(color='green'), name='Racing Line'))
+
     
     # Set figure layout and display plot
     fig.update_layout(template='plotly_dark', title='Circuit Analysis', xaxis=dict(visible=False), yaxis=dict(visible=False))
