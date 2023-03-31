@@ -4,7 +4,6 @@ import dash
 import plotly.graph_objects as go
 from dash import dcc
 from dash import html
-from scipy.interpolate import interp1d
 import os
 from scipy.optimize import minimize
 
@@ -225,66 +224,70 @@ def update_track_plot(track_name):
 
 
     ################ CALCULATE OPTIMAL RACING LINE ############################
-
-
+    
     # Define cost function
-    # def lap_time(x, y, v, theta):
-    #     # Calculate lap time
-    #     lap_time = 0
-    #     for i in range(len(x)-1):
-    #         # Calculate distance between two points
-    #         dx = x[i+1] - x[i]
-    #         dy = y[i+1] - y[i]
-    #         ds = np.sqrt(dx**2 + dy**2)
-    #         # Calculate speed and time taken to travel the distance
-    #         speed = v[i] * np.cos(theta[i]) # Assume car travels at maximum speed along the racing line
-    #         time = ds / speed
-    #         lap_time += time
-    #     return lap_time
+    def lap_time(x, y, v, theta):
+        # Calculate lap time
+        lap_time = 0
+        for i in range(len(x)-1):
+            # Calculate distance between two points
+            dx = x[i+1] - x[i]
+            dy = y[i+1] - y[i]
+            ds = np.sqrt(dx**2 + dy**2)
+            # Calculate speed and time taken to travel the distance
+            speed = v[i] * np.cos(theta[i]) # Assume car travels at maximum speed along the racing line
+            time = ds / speed
+            lap_time += time
+        return lap_time
 
     # Define optimization function
-    # def optimize_racing_line(x_m, y_m, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth):
-    #     # Define initial guess for racing line
-    #     x_r, y_r = x_m, y_m
-        
-    #     # Define maximum velocity and lateral acceleration of the car
-    #     v_max = 60 # m/s
-    #     a_lat_max = 4 # m/s^2
-        
-    #     # Iterate gradient descent to find optimal racing line
-    #     for i in range(100):
-    #         # Calculate velocity and angle of each point on the racing line
-    #         dx = np.gradient(x_r)
-    #         dy = np.gradient(y_r)
-    #         ds = np.sqrt(dx**2 + dy**2)
-    #         v = v_max * np.ones_like(ds) # Assume car travels at maximum speed along the racing line
-    #         theta = np.arctan2(dy, dx)
-            
-    #         # Calculate lateral acceleration of the car
-    #         curvature = np.gradient(np.arctan2(dy, dx), ds)
-    #         a_lat = v**2 * curvature
-            
-    #         # Calculate cost function
-    #         lap_time_current = lap_time(x_r, y_r, v, theta)
-            
-    #         # Update racing line
-    #         x_r_new = minimize(lambda x: lap_time(x, y_r, v, theta), x_r, method='BFGS').x
-    #         y_r_new = minimize(lambda y: lap_time(x_r_new, y, v, theta), y_r, method='BFGS').x
-            
-    #         # Check if new lap time is better than current lap time
-    #         lap_time_new = lap_time(x_r_new, y_r_new, v, theta)
-    #         if lap_time_new < lap_time_current:
-    #             x_r, y_r = x_r_new, y_r_new
-            
-    #     return x_r, y_r
+    def optimize_racing_line(x_m, y_m, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth):
+        # Define initial guess for racing line
+        x_r, y_r = x_m, y_m
 
-    # Calculate optimal racing line
-    # x_r, y_r = optimize_racing_line(x_m_smooth, y_m_smooth, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth)
+        # Define maximum velocity and lateral acceleration of the car
+        v_max = 60 # m/s
+        a_lat_max = 4 # m/s^2
+
+        # Iterate gradient descent to find optimal racing line
+        for i in range(100):
+            # Calculate velocity and angle of each point on the racing line
+            dx = np.gradient(x_r)
+            dy = np.gradient(y_r)
+            ds = np.sqrt(dx**2 + dy**2)
+            v = v_max * np.ones_like(ds) # Assume car travels at maximum speed along the racing line
+            theta = np.arctan2(dy, dx)
+
+            # Calculate lateral acceleration of the car
+            curvature = np.gradient(np.arctan2(dy, dx), ds)
+            a_lat = v**2 * curvature
+
+            # Calculate cost function
+            lap_time_current = lap_time(x_r, y_r, v, theta)
+
+            # Update racing line
+            x_r_new = minimize(lambda x: lap_time(x, y_r, v, theta), x_r, method='BFGS').x
+            y_r_new = minimize(lambda y: lap_time(x_r_new, y, v, theta), y_r, method='BFGS').x
+
+            # Check if new lap time is better than current lap time
+            lap_time_new = lap_time(x_r_new, y_r_new, v, theta)
+            if lap_time_new < lap_time_current:
+                x_r, y_r = x_r_new, y_r_new
+
+        return x_r, y_r
+    
+    ################ END  OPTIMAL RACING LINE ############################
+
+
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
 
+    # Calculate optimal racing line
+    x_r, y_r = optimize_racing_line(x_m_smooth, y_m_smooth, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth)
 
+    
+    fig.add_trace(go.Scatter(x=x_r, y=y_r, line=dict(color='red', width=1), mode='lines', name='Racing Line (Gradient Descent)'))
 
     # Add track limits as lines with solid white color
     fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Right Track Limit'))
@@ -294,10 +297,6 @@ def update_track_plot(track_name):
     # Add center line as a line plot
     fig.add_trace(go.Scatter(x=x_m_smooth, y=y_m_smooth, line=dict(color='teal', width=0.5), mode='lines', name='Center Line'))
     
-    
-     # Plot racing line and track
-    # fig.add_trace(go.Scatter(x=x_r, y=y_r, mode='lines', line=dict(color='green'), name='Racing Line'))
-
     
     # Set figure layout and display plot
     fig.update_layout(template='plotly_dark', title='Circuit Analysis', xaxis=dict(visible=False), yaxis=dict(visible=False))
