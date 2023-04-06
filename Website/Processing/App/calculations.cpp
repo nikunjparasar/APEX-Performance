@@ -1,5 +1,7 @@
 #include <iostream>
 
+#include "VehicleParameters.hpp"
+#include "TireParameters.hpp"
 using namespace std;
 
 int main(int argc, char* argv[]) {
@@ -41,8 +43,14 @@ int main(int argc, char* argv[]) {
         alpha2   |      Slip angle for the frict peak @ load 2  |       8 deg
         Qx       |      Longitudinal shape factor               |       1.9
         Qy       |      Lateral shape factor                    |       1.9    
+
+
+
     
     */
+
+
+
     return 0;
 }
 
