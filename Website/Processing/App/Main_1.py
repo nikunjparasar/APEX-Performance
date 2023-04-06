@@ -237,6 +237,8 @@ def update_track_plot(track_name):
     ###########################################################################
 
     # The physical equations required for optimizing the lap time of a race car:
+    
+    
     '''
 
         Note:
