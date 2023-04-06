@@ -289,10 +289,6 @@ def update_track_plot(track_name):
         Qx       |      Longitudinal shape factor               |       1.9
         Qy       |      Lateral shape factor                    |       1.9
 
-
-        
-        
-        
         
     '''
   
