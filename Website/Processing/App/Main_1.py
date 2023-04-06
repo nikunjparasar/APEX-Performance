@@ -7,10 +7,11 @@ from dash import html
 import os
 from scipy.optimize import minimize
 
-# Set up Dash app
+
+# Set up Dash application
 app = dash.Dash(__name__)
 
-# Define dropdown options
+# Define the dropdown options for all 25 supported racetracks
 dropdown_options = [
     {'label': 'Austin', 'value': 'track_01'},
     {'label': 'BrandsHatch', 'value': 'track_02'},
@@ -41,7 +42,7 @@ dropdown_options = [
 
 
 
-# Define app layout
+# Define the dash application layout
 app.layout = html.Div([
     dcc.Dropdown(
         id='track-dropdown',
@@ -58,7 +59,7 @@ app.layout = html.Div([
     
 ])
 
-# Define callback to update track plot based on dropdown selection
+# Define callback function to update track plot based on dropdown selection and physical value sliders
 @app.callback(
     dash.dependencies.Output('track-plot', 'figure'),
     [dash.dependencies.Input('track-dropdown', 'value')]
@@ -67,7 +68,10 @@ app.layout = html.Div([
 
 def update_track_plot(track_name):
     
-     # #################### LOADING CSV DATA FROM FILES ##########################
+    
+    ###########################################################################
+    #                   LOADING CSV DATA FROM FILES                           #
+    ###########################################################################
     
     cwd = os.getcwd()
     
@@ -183,11 +187,18 @@ def update_track_plot(track_name):
     elif track_name == 'track_25':
         track_data = zandvoort_data   
         
-        
-    ############ END LOADING CSV DATA ###########################################
     
     
-    ############## START CUBIC SPLINE INTERPOLATION ##############################
+    ###########################################################################
+    #                       DATA POINT SMOOTHING                              #
+    ###########################################################################
+    
+    # Here I am smoothing the data points to resolve any rough edes and sharp verticies 
+    # because the data points I am currently using are not extremely precise, so some curvature
+    # estimation is done through cubic spline interpolation, but I think this should still provide 
+    # accurate enough track limits for now. Later I actually plan to use GPX files for coordinate 
+    # specific track imaging, along with 3d spline curves to model the tracks with elevation and 
+    # slope changes as well. 
     
     # Extract data columns
     x_m = track_data[:, 0]
@@ -220,75 +231,82 @@ def update_track_plot(track_name):
     new_points = splev(np.linspace(0, 1, num=2000), tck)
     x_tr_left_smooth, y_tr_left_smooth = new_points
 
-    ############## END CUBIC SPLINE INTERPOLATION ##############################
+
+    ###########################################################################
+    #                 PHYSICS CALCULATIONS                                    #
+    ###########################################################################
+
+    # The physical equations required for optimizing the lap time of a race car:
+    '''
+
+        Note:
+        The following default values and parameters for a formula one car were found from:
+        
+        Limebeer, D. J., and G. Perantoni. “Optimal Control of a Formula One Car on a 
+        Three-Dimensional Track—Part 2: Optimal Control.” Journal of Dynamic Systems, 
+        Measurement, and Control, vol. 137, no. 5, 2015, 
+        https://doi.org/10.1115/1.4029466. 
+        
+        I am using these parameters in my calcuations as well as they are representative of 
+        the constraints that a high performance racecar undergoes during a qualifying lap.
+        
+            Vehicle Parameters 
+            
+        Symbol          Description                                     Default Value
+        ------------------------------------------------------------------
+        Pmax     |      Peak engine power                       |       560 kW
+        M        |      Vehicle mass                            |       660 kg
+        Ix       |      Moment of inertia about the x-axis      |       112.5 kg/m2
+        Iy       |      Moment of inertia about the y-axis      |       450 kg/m2
+        Iz       |      Moment of inertia about the z-axis      |       450 kg/m2
+        W        |      Wheelbase                               |       3.4 m
+        A        |      Distance of CoM from front axle         |       1.8 m
+        B        |      Distance of CoM from rear axle          |       w-a
+        H        |      Center of mass height                   |       0.3 m
+        A        |      Frontal area                            |       1.5 m2    
+        Droll    |      Roll moment distribution (@ front axle) |       0.5
+        wf       |      Front wheel to car centerline distance  |       0.73 m
+        wr       |      Rear wheel to car centerline distance   |       0.73 m
+        R        |      Wheel radius                            |       0.33 m
+        kd       |      Differential friction coefficient       |       10.47 Nm s/rad
+        
+        
+                Tire Parameters
+        Symbol          Description                                     Default Value
+        ------------------------------------------------------------------
+        Fz1      |      Reference load 1                        |       2000 N         
+        Fz2      |      Reference load 2                        |       6000 N
+        mux1     |      Peak longitudinal frict coef @ load 1   |       1.75
+        mux2     |      Peak longitudinal frict coef @ load 2   |       1.40
+        kappa1   |      Slip coef for the frict peak @ load 1   |       0.11
+        kappa2   |      Slip coef for the frict peak @ load 2   |       0.10
+        mu1      |      Peak lat friction coefficient @ load 1  |       1.80
+        mu2      |      Peak lat friction coefficient @ load 2  |       1.45
+        alpha1   |      Slip angle for the frict peak @ load 1  |       9 deg
+        alpha2   |      Slip angle for the frict peak @ load 2  |       8 deg
+        Qx       |      Longitudinal shape factor               |       1.9
+        Qy       |      Lateral shape factor                    |       1.9
 
 
-    ################ CALCULATE OPTIMAL RACING LINE ############################
-    
-    # Define cost function
-    def lap_time(x, y, v, theta):
-        # Calculate lap time
-        lap_time = 0
-        for i in range(len(x)-1):
-            # Calculate distance between two points
-            dx = x[i+1] - x[i]
-            dy = y[i+1] - y[i]
-            ds = np.sqrt(dx**2 + dy**2)
-            # Calculate speed and time taken to travel the distance
-            speed = v[i] * np.cos(theta[i]) # Assume car travels at maximum speed along the racing line
-            time = ds / speed
-            lap_time += time
-        return lap_time
+        
+        
+        
+        
+    '''
+  
 
-    # Define optimization function
-    def optimize_racing_line(x_m, y_m, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth):
-        # Define initial guess for racing line
-        x_r, y_r = x_m, y_m
-
-        # Define maximum velocity and lateral acceleration of the car
-        v_max = 60 # m/s
-        a_lat_max = 4 # m/s^2
-
-        # Iterate gradient descent to find optimal racing line
-        for i in range(100):
-            # Calculate velocity and angle of each point on the racing line
-            dx = np.gradient(x_r)
-            dy = np.gradient(y_r)
-            ds = np.sqrt(dx**2 + dy**2)
-            v = v_max * np.ones_like(ds) # Assume car travels at maximum speed along the racing line
-            theta = np.arctan2(dy, dx)
-
-            # Calculate lateral acceleration of the car
-            curvature = np.gradient(np.arctan2(dy, dx), ds)
-            a_lat = v**2 * curvature
-
-            # Calculate cost function
-            lap_time_current = lap_time(x_r, y_r, v, theta)
-
-            # Update racing line
-            x_r_new = minimize(lambda x: lap_time(x, y_r, v, theta), x_r, method='BFGS').x
-            y_r_new = minimize(lambda y: lap_time(x_r_new, y, v, theta), y_r, method='BFGS').x
-
-            # Check if new lap time is better than current lap time
-            lap_time_new = lap_time(x_r_new, y_r_new, v, theta)
-            if lap_time_new < lap_time_current:
-                x_r, y_r = x_r_new, y_r_new
-
-        return x_r, y_r
-    
-    ################ END  OPTIMAL RACING LINE ############################
-
+    #####################################################################
+    ##                        PLOTTING DATA IN DASH                    ##
+    ######################################################################
 
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
-
-    # Calculate optimal racing line
-    x_r, y_r = optimize_racing_line(x_m_smooth, y_m_smooth, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth)
-
     
-    fig.add_trace(go.Scatter(x=x_r, y=y_r, line=dict(color='red', width=1), mode='lines', name='Racing Line (Gradient Descent)'))
-
+    # Calculate optimal racing line
+    # x_r, y_r = optimize_racing_line(x_m_smooth, y_m_smooth, x_tr_right_smooth, y_tr_right_smooth, x_tr_left_smooth, y_tr_left_smooth)
+    # fig.add_trace(go.Scatter(x=x_r, y=y_r, line=dict(color='red', width=1), mode='lines', name='Racing Line (Gradient Descent)'))
+    
     # Add track limits as lines with solid white color
     fig.add_trace(go.Scatter(x=x_tr_right_smooth, y=y_tr_right_smooth, line=dict(color='white', width=1), mode='lines', name='Right Track Limit'))
     fig.add_trace(go.Scatter(x=x_tr_left_smooth, y=y_tr_left_smooth, line=dict(color='white', width=1.5), mode='lines', name='Left Track Limit'))

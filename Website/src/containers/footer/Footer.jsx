@@ -10,12 +10,13 @@ const Footer = () => (
       </div>
       <div className="apex__footer-btn">
         <p>Future: View Github</p>
+        
       </div>
 
       <></>
 
 
-
+    
 
 
     <div className="apex__footer-links">
