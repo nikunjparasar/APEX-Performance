@@ -29,18 +29,18 @@ class TireParameters{
 
 
                
-                static const double RLOAD_1_DEFAULT = 2000;
-                static const double RLOAD_2_DEFAULT = 6000;
-                static const double PEAK_L1_FRICTION_DEFAULT = 1.75;
-                static const double PEAK_L2_FRICTION_DEFAULT = 1.4;
-                static const double SLIP_L1_COEF_DEFAULT = 0.11;
-                static const double SLIP_L2_COEF_DEFAULT = 0.10;
-                static const double PEAK_LAT_FRICTION_L1_DEFAULT = 1.8;
-                static const double PEAK_LAT_FRICTION_L2_DEFAULT = 1.45;
-                static const double SLIP_ANGLE_L1_DEFAULT = 9;
-                static const double SLIP_ANGLE_L2_DEFAULT = 8;
-                static const double LONG_SHAPE_FACTOR_DEFAULT = 1.9;
-                static const double LAT_SHAPE_FACTOR_DEFAULT = 1.9;
+                static constexpr double RLOAD_1_DEFAULT = 2000;
+                static constexpr double RLOAD_2_DEFAULT = 6000;
+                static constexpr double PEAK_L1_FRICTION_DEFAULT = 1.75;
+                static constexpr double PEAK_L2_FRICTION_DEFAULT = 1.4;
+                static constexpr double SLIP_L1_COEF_DEFAULT = 0.11;
+                static constexpr double SLIP_L2_COEF_DEFAULT = 0.10;
+                static constexpr double PEAK_LAT_FRICTION_L1_DEFAULT = 1.8;
+                static constexpr double PEAK_LAT_FRICTION_L2_DEFAULT = 1.45;
+                static constexpr double SLIP_ANGLE_L1_DEFAULT = 9;
+                static constexpr double SLIP_ANGLE_L2_DEFAULT = 8;
+                static constexpr double LONG_SHAPE_FACTOR_DEFAULT = 1.9;
+                static constexpr double LAT_SHAPE_FACTOR_DEFAULT = 1.9;
 
                 pair<double, const pair<string, string>> Fz1 = {RLOAD_1_DEFAULT, {"Reference Load 1", "N"}};
                 pair<double, const pair<string, string>> Fz2 = {RLOAD_2_DEFAULT, {"Reference Load 2", "N"}};

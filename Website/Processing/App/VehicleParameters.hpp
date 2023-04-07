@@ -9,21 +9,21 @@ using namespace std;
 class VehicleParameters {
         private:
 
-                static const double POWER_MAX_DEFAULT = 560;
-                static const double MASS_DEFAULT = 660;
-                static const double INERTIA_X_DEFAULT = 112.5;
-                static const double INERTIA_Y_DEFAULT = 450;
-                static const double INERTIA_Z_DEFAULT = 450;
-                static const double WHEELBASE_DEFAULT = 3.4;
-                static const double COM_FRONT_AXLE_DEFAULT = 1.8;
-                static const double COM_REAR_AXLE_DEFAULT = WHEELBASE_DEFAULT - COM_FRONT_AXLE_DEFAULT;
-                static const double COM_HEIGHT_DEFAULT = 0.3;
-                static const double FRONTAL_AREA_DEFAULT = 1.5;
-                static const double ROLL_MOMENT_DEFAULT = 0.5;
-                static const double FW_TO_CENTER_DEFAULT = 0.73;
-                static const double RW_TO_CENTER_DEFAULT = 0.73;
-                static const double WHEEL_RADIUS_DEFAULT = 0.33;
-                static const double DIFFERENTIAL_FRICTION_DEFAULT = 10.47;
+                static constexpr double POWER_MAX_DEFAULT = 560;
+                static constexpr double MASS_DEFAULT = 660;
+                static constexpr double INERTIA_X_DEFAULT = 112.5;
+                static constexpr double INERTIA_Y_DEFAULT = 450;
+                static constexpr double INERTIA_Z_DEFAULT = 450;
+                static constexpr double WHEELBASE_DEFAULT = 3.4;
+                static constexpr double COM_FRONT_AXLE_DEFAULT = 1.8;
+                static constexpr double COM_REAR_AXLE_DEFAULT = WHEELBASE_DEFAULT - COM_FRONT_AXLE_DEFAULT;
+                static constexpr double COM_HEIGHT_DEFAULT = 0.3;
+                static constexpr double FRONTAL_AREA_DEFAULT = 1.5;
+                static constexpr double ROLL_MOMENT_DEFAULT = 0.5;
+                static constexpr double FW_TO_CENTER_DEFAULT = 0.73;
+                static constexpr double RW_TO_CENTER_DEFAULT = 0.73;
+                static constexpr double WHEEL_RADIUS_DEFAULT = 0.33;
+                static constexpr double DIFFERENTIAL_FRICTION_DEFAULT = 10.47;
 
                 pair<double, const pair<string, string>> P_max = {POWER_MAX_DEFAULT, {"Peak Engine Power", "kW"}};
                 pair<double, const pair<string, string>> M = {MASS_DEFAULT, {"Vehicle Mass", "kg"}};
@@ -77,7 +77,7 @@ class VehicleParameters {
                 
                 double getPeakPower(){return P_max.first;}
                 double getMass(){return M.first;}
-                double getXInertia(){return I_x.first}
+                double getXInertia(){return I_x.first;}
                 double getYInertia(){return I_y.first;}
                 double getZInertia(){return I_z.first;}
                 double getWheelbase(){return W.first;}

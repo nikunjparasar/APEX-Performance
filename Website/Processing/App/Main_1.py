@@ -252,6 +252,9 @@ def update_track_plot(track_name):
         I am using these parameters in my calcuations as well as they are representative of 
         the constraints that a high performance racecar undergoes during a qualifying lap.
         
+        I have implemented these parameters as two classes in separate c++ algorithms for vehicle and tire modeling
+        
+        
             Vehicle Parameters 
             
         Symbol          Description                                     Default Value
