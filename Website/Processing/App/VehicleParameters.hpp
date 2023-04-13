@@ -2,7 +2,11 @@
 #define VEHICLEPARAMETERS_HPP
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
+#include <utility>
+#include <string>
+#include <sstream>
 
 using namespace std;
 
@@ -45,18 +49,23 @@ class VehicleParameters {
                                                                                         W, A, B, H, Ar, D_roll, w_f, w_r, R, k_d};
         public:
 
-                string vectorized_to_string(){
-                        string result = "";
-                        for(auto it = vectorized_parameters.begin(); it != vectorized_parameters.end(); it++){
-                                result.append(it->second.first);
-                                result.append(": ");
-                                result.append(to_string(it->first));
-                                result.append(" ");
-                                result.append(it->second.second);
-                                result.append("\n");
+                string vectorized_to_string() {
+                        ostringstream result;
+                        result << "+---------------------------------------------------------------------------------------------------+\n";
+                        result << "|                                       VEHICLE PARAMETERS                                          |\n";
+                        result << "+---------------------------------------------------------------------------------------------------+\n";
+                        result << "|                     Parameter Name                      |          Value            |     Units   |\n";
+                        result << "+---------------------------------------------------------+---------------------------+-------------+\n";
+                        for(auto it = vectorized_parameters.begin(); it != vectorized_parameters.end(); it++) {
+                                result << "| ";
+                                result << left << setw(55) << setfill(' ') << it->second.first << " | ";
+                                result << right << setw(25) << setfill(' ') << fixed << setprecision(2) << it->first << " | ";
+                                result << left << setw(11) << setfill(' ') << it->second.second << " |\n";
                         }
-                        return result;
+                        result << "+---------------------------------------------+---------------------------+-------------------------+\n";
+                        return result.str();
                 }
+
                 void restoreDefaults(){
                         P_max.first = POWER_MAX_DEFAULT;
                         M .first= MASS_DEFAULT;

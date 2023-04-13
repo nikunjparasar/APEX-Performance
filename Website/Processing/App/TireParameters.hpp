@@ -2,33 +2,17 @@
 #define TIREPARAMETERS_HPP
 
 #include <iostream>
+#include <iomanip>
 #include <vector>
+#include <utility>
+#include <string>
+#include <sstream>
+
 
 using namespace std;
 
 class TireParameters{
 
-    //TODO:   CHANGE ALL OF THE NAMES TO MATCH TIRE PARAMETERS
-    /*
-
-                  Tire Parameters
-        Symbol          Description                                     Default Value
-        ------------------------------------------------------------------
-        Fz1      |      Reference load 1                        |       2000 N         
-        Fz2      |      Reference load 2                        |       6000 N
-        mux1     |      Peak longitudinal frict coef @ load 1   |       1.75
-        mux2     |      Peak longitudinal frict coef @ load 2   |       1.40
-        kappa1   |      Slip coef for the frict peak @ load 1   |       0.11
-        kappa2   |      Slip coef for the frict peak @ load 2   |       0.10
-        mu1      |      Peak lat friction coefficient @ load 1  |       1.80
-        mu2      |      Peak lat friction coefficient @ load 2  |       1.45
-        alpha1   |      Slip angle for the frict peak @ load 1  |       9 deg
-        alpha2   |      Slip angle for the frict peak @ load 2  |       8 deg
-        Qx       |      Longitudinal shape factor               |       1.9
-        Qy       |      Lateral shape factor                    |       1.9    */
-
-
-               
                 static constexpr double RLOAD_1_DEFAULT = 2000;
                 static constexpr double RLOAD_2_DEFAULT = 6000;
                 static constexpr double PEAK_L1_FRICTION_DEFAULT = 1.75;
@@ -59,17 +43,21 @@ class TireParameters{
                                                                                                 alpha1, alpha2, Qx, Qy};
         public:
 
-                string vectorized_to_string(){
-                        string result = "";
-                        for(auto it = vectorized_parameters.begin(); it != vectorized_parameters.end(); it++){
-                                result.append(it->second.first);
-                                result.append(": ");
-                                result.append(to_string(it->first));
-                                result.append(" ");
-                                result.append(it->second.second);
-                                result.append("\n");
+                string vectorized_to_string() {
+                        ostringstream result;
+                        result << "+---------------------------------------------------------------------------------------------------+\n";
+                        result << "|                                       TIRE PARAMETERS                                             |\n";
+                        result << "+---------------------------------------------------------------------------------------------------+\n";
+                        result << "|                     Parameter Name                      |          Value            |     Units   |\n";
+                        result << "+---------------------------------------------------------+---------------------------+-------------+\n";
+                        for(auto it = vectorized_parameters.begin(); it != vectorized_parameters.end(); it++) {
+                                result << "| ";
+                                result << left << setw(55) << setfill(' ') << it->second.first << " | ";
+                                result << right << setw(25) << setfill(' ') << fixed << setprecision(2) << it->first << " | ";
+                                result << left << setw(11) << setfill(' ') << it->second.second << " |\n";
                         }
-                        return result;
+                        result << "+---------------------------------------------+---------------------------+-------------------------+\n";
+                        return result.str();
                 }
                 void restoreDefaults(){
                        Fz1.first = RLOAD_1_DEFAULT;

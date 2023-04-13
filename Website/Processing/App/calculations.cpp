@@ -7,7 +7,12 @@ using namespace std;
 int main(int argc, char* argv[]) {
     
     VehicleParameters v;
-    cout << v.getCOMFrontAxle();
+    TireParameters t;
+
+    cout << v.vectorized_to_string();
+    cout << endl;
+    cout << t.vectorized_to_string();
+
 
 
     return 0;
