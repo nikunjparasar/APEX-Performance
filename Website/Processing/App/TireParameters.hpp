@@ -56,7 +56,8 @@ class TireParameters{
                                 result << right << setw(25) << setfill(' ') << fixed << setprecision(2) << it->first << " | ";
                                 result << left << setw(11) << setfill(' ') << it->second.second << " |\n";
                         }
-                        result << "+---------------------------------------------+---------------------------+-------------------------+\n";
+                        
+                        result << "+---------------------------------------------------------+---------------------------+-------------+\n";
                         return result.str();
                 }
                 void restoreDefaults(){
