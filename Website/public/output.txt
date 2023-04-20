@@ -1,0 +1,42 @@
++---------------------------------------------------------------------------------------------------+
+|                                       VEHICLE PARAMETERS                                          |
++---------------------------------------------------------------------------------------------------+
+|                     Parameter Name                      |          Value            |     Units   |
++---------------------------------------------------------+---------------------------+-------------+
+| Peak Engine Power                                       |                    560.00 | kW          |
+| Vehicle Mass                                            |                    660.00 | kg          |
+| Moment of Inertia about the x-axis                      |                    112.50 | kg/m^2      |
+| Moment of Inertia about the y-axis                      |                    450.00 | kg/m^2      |
+| Moment of Inertia about the y-axis                      |                    450.00 | kg/m^2      |
+| Moment of Inertai about the z-axis                      |                    450.00 | kg/m^2      |
+| Wheelbase                                               |                      3.40 | m           |
+| Wheelbase                                               |                      3.40 | m           |
+| Distance of mass center from rear axle                  |                      1.80 | m           |
+| Distance of mass center from rear axle                  |                      1.60 | m           |
+| Center of mass height                                   |                      0.30 | m           |
+| Frontal Area                                            |                      1.50 | m^2         |
+| Roll moment distribution (fraction @ front axle)        |                      0.50 |             |
+| Front Wheel to car centerline distance                  |                      0.73 | m           |
+| Rear Wheel to car centerline distance                   |                      0.73 | m           |
+| Wheel Radius                                            |                      0.33 | m           |
+| Differential Friction coefficient                       |                     10.47 | Nm s/rad    |
++---------------------------------------------------------+---------------------------+-------------+
+
++---------------------------------------------------------------------------------------------------+
+|                                       TIRE PARAMETERS                                             |
++---------------------------------------------------------------------------------------------------+
+|                     Parameter Name                      |          Value            |     Units   |
++---------------------------------------------------------+---------------------------+-------------+
+| Reference Load 1                                        |                   2000.00 | N           |
+| Reference Load 2                                        |                   6000.00 | N           |
+| Peak longitudinal frict coef @ load 1                   |                      1.75 |             |
+| Peak longitudinal frict coef @ load 2                   |                      1.40 |             |
+| Slip coef for the frict peak @ load 1                   |                      0.11 |             |
+| Slip coef for the frict peak @ load 2                   |                      0.10 |             |
+| Peak lat friction coefficient @ load 1                  |                      1.80 |             |
+| Peak lat friction coefficient @ load 2                  |                      1.45 |             |
+| Slip angle for the frict peak @ load 1                  |                      9.00 | deg         |
+| Slip angle for the frict peak @ load 2                  |                      8.00 | deg         |
+| Longitudinal shape factor                               |                      1.90 |             |
+| Lateral shape factor                                    |                      1.90 |             |
++---------------------------------------------------------+---------------------------+-------------+

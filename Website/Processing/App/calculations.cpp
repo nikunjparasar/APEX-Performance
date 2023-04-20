@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 
 #include "VehicleParameters.hpp"
 #include "TireParameters.hpp"
@@ -9,34 +10,16 @@ int main(int argc, char* argv[]) {
     VehicleParameters v;
     TireParameters t;
 
-    
+    ofstream outfile("../public/output.txt", ios::trunc);
 
-    cout << v.vectorized_to_string();
-    cout << endl;
-    cout << t.vectorized_to_string();
-    
-    cout << "THEORETICAL LAPTIME ON TRACK: ";
+    outfile << v.vectorized_to_string() << endl;
+    outfile << t.vectorized_to_string();
+
+    // Close the output file
+    outfile.close();
 
     return 0;
 }
 
-double calculate_time(VehicleParameters v, TireParameters t, ){
-    v.getPeakPower();
-    v.getMass();
-    v.getXInertia();
-    v.getYInertia();
-    v.getZInertia();
-    v.getWheelbase();
-    v.getCOMFrontAxle();
-    v.getCOMRearAxle();
-    v.getCOMheight();
-    v.getFrontalArea();
-    v.getRollDistribution();
-    v.getFWtoCenter();
-    v.getRWtoCenter();
-    v.getWheelRadius();
-    v.getDiffFriction();   
-    return 0.0;
-}
 
     

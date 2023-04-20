@@ -1,7 +1,7 @@
 import React from 'react';
 
 import {Footer, Possibility, Features, Header} from './containers';
-import {CTA, Brand, Navbar} from './components';
+import {CTA, Brand, Navbar, CppRunner} from './components';
 import './App.css';
 const App = () => {
   return (
@@ -29,6 +29,7 @@ const App = () => {
         <Brand />
         <Features />
         <Possibility />
+        <CppRunner filePath={'Processing/App/output.txt'} />
         <CTA />
        <Footer />
     </div>

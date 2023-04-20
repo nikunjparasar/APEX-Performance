@@ -1,0 +1,11 @@
+h2{
+    font-family: var(--font-family);
+    color: #Fff;
+    padding-bottom: 1rem;
+    text-align: center;
+}
+pre {
+    color: #FFF;
+    text-align: center;
+    padding-bottom: 3rem;
+}
