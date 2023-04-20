@@ -60,6 +60,7 @@ class TireParameters{
                         result << "+---------------------------------------------------------+---------------------------+-------------+\n";
                         return result.str();
                 }
+                
                 void restoreDefaults(){
                        Fz1.first = RLOAD_1_DEFAULT;
                        Fz2.first = RLOAD_2_DEFAULT;
