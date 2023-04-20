@@ -22,7 +22,7 @@ const Footer = () => (
     <div className="apex__footer-links">
       <div className="apex__footer-links_logo">
         <img src={apexLogo} alt="apex_logo" />
-        <p>APEX Performance Motorsports <br /> All Rights Reserved</p>
+        <p>APEX Performance Motorsports <br /> All Rights Reserved  Nikunj Parasar</p>
       </div>
       <div className="apex__footer-links_div">
         <h4>Links</h4>

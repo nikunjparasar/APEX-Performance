@@ -37,12 +37,11 @@ const Header = () => {
     <div className='apex__header section__padding' id='home'>
       <div className='apex__header-content'>
         <h1 className='gradient__text'>Performance Perfected.  <br/>Dynamics and circuit analysis</h1>
-        <p>"If you’re going to push a piece of machinery to the limit, and expect to hold it together, you have to have 
+        <p className='apex__header-content_main'>"If you’re going to push a piece of machinery to the limit, and expect to hold it together, you have to have 
           some sense of where that limit is. Look out there. Out there is the perfect lap. No mistakes, every gear change, every corner. Perfect."  
           <br/><br/>- Ken Miles</p>
-        <div className='apex__header-content__input'>
-          <input type='email' placeholder='Your email adress'/>
-          <button type="button">Get Started</button>
+        <div className='apex__header-content_small'>
+          <p>*purely theoretical dashboard rendering</p>
         </div>
       </div>
       

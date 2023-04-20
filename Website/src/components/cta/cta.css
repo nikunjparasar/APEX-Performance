@@ -9,6 +9,12 @@
     border-radius: 1rem;
     background: var(--gradient-bar)
 }
+.apex__cta img {
+    width: 429px;
+    height: 260px;
+    padding: 2rem;
+
+}
 
 .apex__cta-content {
     display: flex;
@@ -18,11 +24,17 @@
     color: #000000;
 }
 
-.apex__cta-content p {
+.apex__cta-content_main {
     font-family: var(--font-family);
-    font-size: 12px;
+    font-size: 10px;
     line-height: 30px;
     font-weight: 500;
+}
+
+.apex__cta-content_citation_1 {
+    font-family: var(--font-family);
+    font-size: 7px;
+    
 }
 
 .apex__cta-content h3 {

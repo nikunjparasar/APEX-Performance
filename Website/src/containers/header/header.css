@@ -21,7 +21,7 @@
     letter-spacing: -0.04em;
 }
 
-.apex__header-content p {
+.apex__header-content_main{
     font-family: var(--font-family);
     font-weight: 400;
     font-size: 20px;
@@ -31,49 +31,10 @@
     margin-top: 1.5rem;
 }
 
-.apex__header-content__input {
-    width: 100%;
-    margin: 2rem 0 1rem;
-
-    display: flex;
-    flex-direction: row;
-}
-
-.apex__header-content__input input {
-    flex: 2;
-    width: 100%;
-    min-height: 50px;
+.apex__header-content_small {
     font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 28px;
-    background: var(--color-footer);
-    border: 2px solid var(--color-footer);
-    padding: 0 1rem;
-    outline: none;
-    color: #fff;
-
-    border-top-left-radius: 5px;
-    border-bottom-left-radius: 5px;
-}
-
-.apex__header-content__input button {
-    flex: 0.6;
-    width: 100%;
-    min-height: 50px;
-    font-family: var(--font-family);
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 28px;
-    background: #20f8ff34;
-    border: 2px solid #b5ff20;
-    padding: 0 1rem;
-    color: #fff;
-    cursor: pointer;
-    outline: none;
-
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
+    color: #6cbe00;
+    font-size: 10px;
 }
 
 .apex__header-image {
@@ -129,11 +90,7 @@
         margin: 0;
     }
 
-    .apex__header-content__input input,
-    .apex__header-content__input button {
-        font-size: 16px;
-        line-height: 24px;
-    }
+
 }
 
 @media screen and (max-width: 490px) {
@@ -147,9 +104,4 @@
         line-height: 24px;
     }
 
-    .apex__header-content__input input,
-    .apex__header-content__input button {
-        font-size: 12px;
-        line-height: 16px;
-    }
 }
