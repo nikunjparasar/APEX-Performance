@@ -3,9 +3,9 @@ import React from 'react';
 const DashGraph = () => {
   return (
     <iframe
-      title="Dash Graph"
-      src="http://localhost:8050" // or your deployed Dash app URL
-      width="750px"
+      title="International Circuit Dashboard"
+      src="http://localhost:8050" 
+      width="90%"
       height="770px"
       frameBorder="0"
     />

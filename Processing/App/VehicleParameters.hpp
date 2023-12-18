@@ -12,7 +12,6 @@ using namespace std;
 
 class VehicleParameters {
         private:
-
                 static constexpr double POWER_MAX_DEFAULT = 560;
                 static constexpr double MASS_DEFAULT = 660;
                 static constexpr double INERTIA_X_DEFAULT = 112.5;
@@ -120,3 +119,30 @@ class VehicleParameters {
 };
 
 #endif
+
+
+
+
+//     ###########################################################################
+//     #                 PHYSICS CALCULATIONS                                    #
+//     ###########################################################################
+
+//     # The physical equations required for calculating the lap time of a race car:
+    
+    
+//     '''
+
+//         Note:
+//         The following default values and parameters for a formula one car were found from:
+        
+//         Limebeer, D. J., and G. Perantoni. “Optimal Control of a Formula One Car on a 
+//         Three-Dimensional Track—Part 2: Optimal Control.” Journal of Dynamic Systems, 
+//         Measurement, and Control, vol. 137, no. 5, 2015, 
+//         https://doi.org/10.1115/1.4029466. 
+        
+//         I am using these parameters in my calcuations as well as they are representative of 
+//         the constraints that a high performance racecar undergoes during a qualifying lap.
+        
+//         I have implemented these parameters as two classes in separate c++ algorithms for vehicle and tire modeling
+
+//     '''

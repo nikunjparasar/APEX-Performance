@@ -8,7 +8,7 @@
 | Moment of Inertia about the x-axis                      |                    112.50 | kg/m^2      |
 | Moment of Inertia about the y-axis                      |                    450.00 | kg/m^2      |
 | Moment of Inertia about the y-axis                      |                    450.00 | kg/m^2      |
-| Moment of Inertai about the z-axis                      |                    450.00 | kg/m^2      |
+| Moment of Inertia about the z-axis                      |                    450.00 | kg/m^2      |
 | Wheelbase                                               |                      3.40 | m           |
 | Wheelbase                                               |                      3.40 | m           |
 | Distance of mass center from rear axle                  |                      1.80 | m           |

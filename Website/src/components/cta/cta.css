@@ -3,26 +3,47 @@
     justify-content: space-between;
     align-items: center;
     flex-direction: row;
-
     padding: 2rem;
     margin: 4rem;
     border-radius: 1rem;
-    background: var(--gradient-bar)
-}
-.apex__cta img {
-    width: 429px;
-    height: 260px;
-    padding: 2rem;
+    background: var(--gradient-bar);
+  }
 
+.apex__cta img {
+  width: 550px;
+  height: 320px;
+  padding: 1rem;
 }
 
 .apex__cta-content {
     display: flex;
-    flex-direction: column;
-
+    flex-direction: row; /* Change to row to place image and text side by side */
+    justify-content: space-between; /* Adjust spacing between image and text */
+    align-items: center;
     text-align: left;
     color: #000000;
-}
+    width: 100%; /* Ensure the content takes full width */
+  }
+  
+  .apex__cta-left {
+    flex: 1; /* Make the image take up 1/2 of the available space */
+  }
+  
+  .apex__cta-right {
+    flex: 1; /* Make the text take up 1/2 of the available space */
+  }
+
+
+  @media screen and (max-width: 800px) {
+    .apex__cta {
+      flex-direction: column;
+    }
+  
+    .apex__cta-left,
+    .apex__cta-right {
+      width: 100%; /* Make both elements take full width when stacked */
+    }
+  }
 
 .apex__cta-content_main {
     font-family: var(--font-family);

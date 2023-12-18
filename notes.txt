@@ -4,8 +4,10 @@ be in 'apexperformance/Website'
 
 run the following commands in terminal
 
+pip install fastf1
+
 if not already: alias python="python3" // coz vscode some reason isnt recognizing after 
 
 then
 
-python -u "Processing/App/Main_1.py" & npm start
+python3 -u "../Processing/App/Main_1.py" & npm start

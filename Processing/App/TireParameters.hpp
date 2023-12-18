@@ -101,8 +101,6 @@ class TireParameters{
                 void setSlipAngle2(double value){alpha2.first = value;}
                 void setLongShapeFactor(double value){Qx.first = value;}
                 void setLatShapeFactor(double value){Qy.first = value;}
-
-
 };
 
 

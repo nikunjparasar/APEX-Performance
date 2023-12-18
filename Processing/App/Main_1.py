@@ -47,13 +47,13 @@ app.layout = html.Div([
         id='track-dropdown',
         options=dropdown_options,
         value='track_01',
-        style = {'backgroundColor': 'lime', 'width': '700px', 'font-family': 'Arial'},
+        style = {'backgroundColor': 'lime', 'width': '100%', 'font-family': 'Arial'},
         # option_style={'backgroundColor': 'gray'},
 
     ),
     dcc.Graph(
         id='track-plot', 
-        style={'height': '700px', 'width': '700px'}
+        style={'height': '700px', 'width': '100%'}
     )
     
 ])
@@ -73,7 +73,8 @@ def update_track_plot(track_name):
     ###########################################################################
     
     track_data, line_data = Parse_RaceTracks.parse(track_name)
-        
+    
+    
     
     ###########################################################################
     #                       DATA POINT SMOOTHING                              #
@@ -122,33 +123,6 @@ def update_track_plot(track_name):
     x_r = line_data[:, 0]
     y_r = line_data[:, 1]
 
-
-    ###########################################################################
-    #                 PHYSICS CALCULATIONS                                    #
-    ###########################################################################
-
-    # The physical equations required for calculating the lap time of a race car:
-    
-    
-    '''
-
-        Note:
-        The following default values and parameters for a formula one car were found from:
-        
-        Limebeer, D. J., and G. Perantoni. “Optimal Control of a Formula One Car on a 
-        Three-Dimensional Track—Part 2: Optimal Control.” Journal of Dynamic Systems, 
-        Measurement, and Control, vol. 137, no. 5, 2015, 
-        https://doi.org/10.1115/1.4029466. 
-        
-        I am using these parameters in my calcuations as well as they are representative of 
-        the constraints that a high performance racecar undergoes during a qualifying lap.
-        
-        I have implemented these parameters as two classes in separate c++ algorithms for vehicle and tire modeling
-        
-        
-        
-    '''
-  
 
     #####################################################################
     ##                        PLOTTING DATA IN DASH                    ##
