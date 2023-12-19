@@ -3,6 +3,7 @@ import React from 'react';
 import {Footer, Possibility, Features, Header} from './containers';
 import {CTA, Brand, Navbar, CppRunner} from './components';
 import './App.css';
+import DashGraph from './components/Grid/DashGraph';
 
 const App = () => {
   return (
@@ -32,7 +33,8 @@ const App = () => {
         <Features />
         <Possibility />
         <CTA />
-        {/* <MyGrid /> */}
+        <DashGraph />
+        <CppRunner />
        <Footer />
     </div>
     

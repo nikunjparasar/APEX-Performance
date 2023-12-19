@@ -17,6 +17,7 @@ function CppRunner() {
       });
   }, []);
 
+  <h2>Neural Net Parameters</h2>
   return (
     <div>
       <pre>{output}</pre>
