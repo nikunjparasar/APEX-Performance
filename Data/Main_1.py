@@ -48,14 +48,16 @@ dropdown_options = [
 
 value_to_name_mapping = {option['value']: option['label'] for option in dropdown_options}
 
+
+
+
 # Define the dash application layout
 app.layout = html.Div([
     dcc.Dropdown(
         id='track-dropdown',
         options=dropdown_options,
         value='track_01',
-        style = {'backgroundColor': 'lime', 'width': '100%', 'font-family': 'Arial',},
-        # option_style={'backgroundColor': 'gray'},
+        style={'backgroundColor': 'lime', 'width': '100%', 'font-family': 'Arial'},
     ),
     html.Div([
         dcc.Graph(
@@ -66,9 +68,8 @@ app.layout = html.Div([
             id='speed-plot',
             style={'height': '700px', 'width': '50%'}
         )
-    ], style={'display': 'flex'})
-    
-])
+    ], style={'display': 'flex', 'backgroundColor': 'black'}),
+], style={'backgroundColor': 'black'})
 
 @app.callback(
     [dash.dependencies.Output('track-plot', 'figure'),

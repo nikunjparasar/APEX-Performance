@@ -1,34 +1,45 @@
 import fastf1 as ff1
 import pandas as pd
-import plotly.express as px
+import plotly.graph_objs as go
 from dash import Dash, html, dcc
 
-# Load data using fastf1
-track = 'Silverstone'
-session = ff1.get_session(2023, track, 'Q')
+# Load session data
+session = ff1.get_session(2021, 'Budapest', 'Q')
 session.load()
-lap = session.laps.pick_fastest()
 
-# Prepare telemetry data
-telemetry = lap.telemetry
-x = telemetry['X']
-y = telemetry['Y']
-speed = telemetry['Speed']
+fastest_lap = session.laps.pick_fastest()
+car_data = fastest_lap.get_car_data().add_distance()
+circuit_info = session.get_circuit_info()
 
-# Create a DataFrame for easier handling
-df = pd.DataFrame({'x': x, 'y': y, 'speed': speed})
+# Convert data to DataFrame for easier manipulation
+df = pd.DataFrame({'Distance': car_data['Distance'], 'Speed': car_data['Speed']})
 
-# Create a Plotly figure using scatter with line mode
-fig = px.scatter(df, x='x', y='y', color='speed', color_continuous_scale='Plasma',
-                 labels={'speed': 'Speed (km/h)'})
-fig.update_traces(mode='lines+markers', marker=dict(size=10), line=dict(width=2), connectgaps=False)
+# Create Plotly figure
+fig = go.Figure()
+
+# Add speed trace
+# Instead of using fastf1.plotting for team color, you can set a color manually
+# For example: team_color = 'blue' or any other color of your choice
+team_color = 'teal'  # Replace with your preferred color
+fig.add_trace(go.Scatter(x=df['Distance'], y=df['Speed'], mode='lines',
+                         line=dict(color=team_color), name=fastest_lap['Driver']))
+
+# Add vertical lines and corner numbers
+v_min = df['Speed'].min()
+v_max = df['Speed'].max()
+for _, corner in circuit_info.corners.iterrows():
+    fig.add_shape(type='line', x0=corner['Distance'], y0=v_min-20,
+                  x1=corner['Distance'], y1=v_max+20, line=dict(color='grey', dash='dot'))
+    fig.add_annotation(x=corner['Distance'], y=v_min-30, text=f"{corner['Number']}{corner['Letter']}",
+                       showarrow=False, yshift=10)
+
+# Update layout
 fig.update_layout(
-    title=f'Fastest Lap Telemetry at {track}', 
-    plot_bgcolor='#121212', 
-    paper_bgcolor='#121212', 
-    font=dict(color='white'),
-    xaxis=dict(scaleanchor="y", scaleratio=1),
-    yaxis=dict(scaleanchor="x", scaleratio=1)
+    title='Fastest Lap Telemetry',
+    xaxis_title='Distance in m',
+    yaxis_title='Speed in km/h',
+    plot_bgcolor='black',
+    yaxis=dict(range=[v_min - 40, v_max + 20])
 )
 
 # Create Dash app
@@ -36,7 +47,7 @@ app = Dash(__name__)
 
 app.layout = html.Div([
     dcc.Graph(
-        id='track-map',
+        id='v-plot',
         figure=fig
     )
 ])
