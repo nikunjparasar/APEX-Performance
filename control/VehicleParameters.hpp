@@ -114,8 +114,6 @@ class VehicleParameters {
                 void setRWtoCenter(double value){w_r.first = value;}
                 void setWheelRadius(double value){R.first = value;}
                 void setDiffFriction(double value){k_d.first = value;}
-
-
 };
 
 #endif

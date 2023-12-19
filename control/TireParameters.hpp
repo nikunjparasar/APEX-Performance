@@ -12,7 +12,7 @@
 using namespace std;
 
 class TireParameters{
-
+        private:
                 static constexpr double RLOAD_1_DEFAULT = 2000;
                 static constexpr double RLOAD_2_DEFAULT = 6000;
                 static constexpr double PEAK_L1_FRICTION_DEFAULT = 1.75;
