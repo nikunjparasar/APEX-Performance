@@ -5,7 +5,7 @@ const DashGraph = () => {
     <iframe
       title="International Circuit Dashboard"
       src="http://localhost:8050" 
-      width="90%"
+      width="700px"
       height="770px"
       frameBorder="0"
     />

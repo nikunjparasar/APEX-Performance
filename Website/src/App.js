@@ -2,9 +2,8 @@ import React from 'react';
 
 import {Footer, Possibility, Features, Header} from './containers';
 import {CTA, Brand, Navbar, CppRunner} from './components';
-import DashGraph from './components/DashGraph';
-
 import './App.css';
+
 const App = () => {
   return (
     <div className='App'>
@@ -33,8 +32,7 @@ const App = () => {
         <Features />
         <Possibility />
         <CTA />
-        <DashGraph />
-        <CppRunner filePath={'Processing/App/output.txt'} />
+        {/* <MyGrid /> */}
        <Footer />
     </div>
     

@@ -19,7 +19,6 @@ function CppRunner() {
 
   return (
     <div>
-      <h2>Example Control Parameters: Formula 1</h2>
       <pre>{output}</pre>
       <p><br/></p>
 

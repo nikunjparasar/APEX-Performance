@@ -1,4 +1,11 @@
 import numpy as np
+import matplotlib as mpl
+import fastf1 as ff1
+import pandas as pd
+import plotly.express as px
+
+from matplotlib import pyplot as plt
+from matplotlib.collections import LineCollection
 from scipy.interpolate import splprep, splev
 import dash
 import plotly.graph_objects as go
@@ -39,7 +46,7 @@ dropdown_options = [
     {'label': 'Zandvoort', 'value': 'track_25'},
 ]
 
-
+value_to_name_mapping = {option['value']: option['label'] for option in dropdown_options}
 
 # Define the dash application layout
 app.layout = html.Div([
@@ -47,38 +54,62 @@ app.layout = html.Div([
         id='track-dropdown',
         options=dropdown_options,
         value='track_01',
-        style = {'backgroundColor': 'lime', 'width': '100%', 'font-family': 'Arial'},
+        style = {'backgroundColor': 'lime', 'width': '100%', 'font-family': 'Arial',},
         # option_style={'backgroundColor': 'gray'},
-
     ),
-    dcc.Graph(
-        id='track-plot', 
-        style={'height': '700px', 'width': '100%'}
-    )
+    html.Div([
+        dcc.Graph(
+            id='track-plot',
+            style={'height': '700px', 'width': '50%'}
+        ),
+        dcc.Graph(
+            id='speed-plot',
+            style={'height': '700px', 'width': '50%'}
+        )
+    ], style={'display': 'flex'})
     
 ])
 
-# Define callback function to update track plot based on dropdown selection and physical value sliders
 @app.callback(
-    dash.dependencies.Output('track-plot', 'figure'),
+    [dash.dependencies.Output('track-plot', 'figure'),
+     dash.dependencies.Output('speed-plot', 'figure')],
     [dash.dependencies.Input('track-dropdown', 'value')]
 )
 
-
 def update_track_plot(track_name):
+    r_fig = update_racing_line(track_name)
+    s_fig = update_speed_plot(track_name)
+    return r_fig, s_fig
+
+def update_speed_plot(track_name):
+    track = value_to_name_mapping[track_name]
+    session = ff1.get_session(2023, track, 'Q')
+    session.load()
+    lap = session.laps.pick_fastest()
+    telemetry = lap.telemetry
+    x = telemetry['X']
+    y = telemetry['Y']
+    speed = telemetry['Speed']
     
-    
-    ###########################################################################
-    #                   LOADING CSV DATA FROM FILES                           #
-    ###########################################################################
-    
+    df = pd.DataFrame({'x': x, 'y': y, 'speed': speed})
+
+    fig = px.scatter(df, x='x', y='y', color='speed', color_continuous_scale='Plasma',
+                 labels={'speed': 'Speed (km/h)'})
+    fig.update_traces(mode='lines+markers', marker=dict(size=7), line=dict(width=2), connectgaps=False)
+    fig.update_layout(
+        title=f'Fastest Lap Telemetry at {track}', 
+        plot_bgcolor='#121212', 
+        paper_bgcolor='#121212', 
+        font=dict(color='white'),
+        xaxis=dict(scaleanchor="y", scaleratio=1),
+        yaxis=dict(scaleanchor="x", scaleratio=1)    
+    )
+
+    return fig
+
+def update_racing_line(track_name):
+        
     track_data, line_data = Parse_RaceTracks.parse(track_name)
-    
-    
-    
-    ###########################################################################
-    #                       DATA POINT SMOOTHING                              #
-    ###########################################################################
     
     # Here I am smoothing the data points to resolve any rough edes and sharp verticies 
     # because the data points I am currently using are not extremely precise, so some curvature
@@ -122,12 +153,7 @@ def update_track_plot(track_name):
     # extract data for racing lines
     x_r = line_data[:, 0]
     y_r = line_data[:, 1]
-
-
-    #####################################################################
-    ##                        PLOTTING DATA IN DASH                    ##
-    ######################################################################
-
+    
 
     # Create a Plotly figure with dark background
     fig = go.Figure()
@@ -150,13 +176,14 @@ def update_track_plot(track_name):
     
     # Set layout and display plot
     
-    fig.update_layout(template='plotly_dark', title='APEX Circuit Analysis Software', xaxis=dict(visible=False), yaxis=dict(visible=False))
+    fig.update_layout(template='plotly_dark', title='APEX Race Line Analysis', xaxis=dict(visible=False), yaxis=dict(visible=False))
     # fig.update_layout(aspectmode='track_data')
     
     fig.update_yaxes(scaleanchor="x", scaleratio=1)
     fig.update_xaxes(scaleanchor="y", scaleratio=1)
     
     return fig
+
 
 if __name__ == '__main__':
     app.run_server(debug=True, port=8050)
