@@ -74,8 +74,8 @@ def generate_oval_track(long_radius=120, short_radius=80, num_points=360, w_tr_l
     return df
 
 # Generate sample track data
-# df = generate_circular_track()
-df = generate_oval_track()
+df = generate_circular_track()
+# df = generate_oval_track()
 # df = pd.read_csv('Data/test_model.csv')
 
 # ===========================
@@ -698,18 +698,18 @@ for episode in range(1, num_episodes + 1):
         else:
             orientation_angle = None
 
-        plot_racetrack_and_controls(
-            df, 
-            path, 
-            throttle_values, 
-            steering_values, 
-            episode_num=episode, 
-            done=done, 
-            total_reward=total_reward, 
-            save=True, 
-            save_dir=plot_directory,
-            orientation_angle=orientation_angle
-        )
+        # plot_racetrack_and_controls(
+        #     df, 
+        #     path, 
+        #     throttle_values, 
+        #     steering_values, 
+        #     episode_num=episode, 
+        #     done=done, 
+        #     total_reward=total_reward, 
+        #     save=True, 
+        #     save_dir=plot_directory,
+        #     orientation_angle=orientation_angle
+        # )
         paths_to_store.append(path)
 
     
